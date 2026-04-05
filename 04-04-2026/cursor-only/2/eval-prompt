@@ -1,0 +1,54 @@
+# RCA Investigation - Eval 2
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `c2509f47c4acc461ae90e9b57265824badf95221`  
+**Error Timestamp:** `2026-02-23 21:00:34`
+
+**Repository:** foam-ai/mono
+
+**Service:** Mono (service-id: `mono`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "ReplyError",
+  "exceptionMessage": "OOM command not allowed when used memory > 'maxmemory'. script: cc4eded989ba9b04d25cc2407a1142f33a30400e, on @user_script:26.",
+  "exceptionStacktrace": "ReplyError: OOM command not allowed when used memory > 'maxmemory'. script: cc4eded989ba9b04d25cc2407a1142f33a30400e, on @user_script:26.\n    at parseError (/app/node_modules/redis-parser/lib/parser.js:179:12)\n    at parseType (/app/node_modules/redis-parser/lib/parser.js:302:14)",
+  "traceId": "b2eb0b80f0a721f2a2b8b3c11c9f169d",
+  "spanId": "65af1fb700df34f3",
+  "parentSpanId": "c9d25acabb0ee8f3",
+  "timestamp": "2026-01-29 07:05:10.345000000",
+  "_id": "697b06c12f68d78d74e96e5d"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

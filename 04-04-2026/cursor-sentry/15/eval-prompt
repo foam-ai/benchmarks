@@ -1,0 +1,96 @@
+# RCA Investigation - Eval 15
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `5531e596ca972224bbc0a6018e1d1f315ca87944`  
+**Error Timestamp:** `2026-01-11 21:41:46`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+
+**Error:**
+```
+Error: Unknown expression identifier `Attributes` in scope SELECT Body, Timestamp, ServiceName, SeverityText, Attributes FROM otel_logs WHERE (Body LIKE '%no spac%') AND (Timestamp > (now() - toIntervalHour(24))) ORDER BY Timestamp DESC LIMIT 50.
+```
+
+**Timestamp:** `2026-01-11 21:56:26.370000000`
+
+**Stacktrace:**
+```
+Error: Unknown expression identifier `Attributes`
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at ClientRequest.onResponse (/app/node_modules/packages/client-node/src/connection/node_base_connection.ts:553:25)
+    at parseError (/app/node_modules/packages/client-common/src/error/error.ts:31:12)
+```
+
+---
+
+## TOOLS AVAILABLE
+
+### Sentry MCP
+
+You have access to Sentry MCP tools to investigate this error in detail:
+
+**Usage:**
+```bash
+get_sentry_resource(resourceType='issue', organizationSlug='foam-ai-0j', resourceId='ISSUE_ID')
+search_issue_events(organizationSlug='foam-ai-0j', issueId='ISSUE_ID', naturalLanguageQuery='...')
+```
+
+**Available Operations:**
+- Fetch full issue details, events, and context
+- Search events by message, timestamp, or trace ID
+- Get breadcrumbs and tags
+- Review all occurrences and error patterns
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/benchmarks/04-04-2026/cursor-sentry/15/output.md`
+
+---

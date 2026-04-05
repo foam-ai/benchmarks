@@ -1,0 +1,53 @@
+# RCA Investigation - Eval 6
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `79390570cf625fefccf0bf4422afc66d54280a78`  
+**Error Timestamp:** `2025-12-28 04:25:52`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "ResponseError",
+  "exceptionMessage": "document_parsing_exception\n\tCaused by:\n\t\tillegal_argument_exception: For input string: \"log().info('Creating worktree', { repoOwner, repoName, gitSha, worktreePath });\"\n\tRoot causes:\n\t\tdocument_parsing_exception: [1:114] failed to parse field [arg_0] of type [long] in document with id 'SRB7WJsBZqWjny1Va7b8'. Preview of field's value: 'log().info('Creating worktree', { repoOwner, repoName, gitSha, worktreePath });'",
+  "exceptionStacktrace": "ResponseError: document_parsing_exception\n\tCaused by:\n\t\tillegal_argument_exception: For input string: \"log().info('Creating worktree', { repoOwner, repoName, gitSha, worktreePath });\"\n\tRoot causes:\n\t\tdocument_parsing_exception: [1:114] failed to parse field [arg_0] of type [long] in document with id 'SRB7WJsBZqWjny1Va7b8'. Preview of field's value: 'log().info('Creating worktree', { repoOwner, repoName, gitSha, worktreePath });'\n    at SniffingTransport._request (/app/node_modules/@elastic/transport/src/Transport.ts:606:17)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async <anonymous> (/app/node_modules/@elastic/transport/src/Transport.ts:740:22)\n    at async SniffingTransport.request (/app/node_modules/@elastic/transport/src/Transport.ts:737:14)\n    at async Client.IndexApi (/app/node_modules/@elastic/src/api/api/index.ts:83:10)\n    at async ElasticsearchTransport.processQueue (/elasticsearch/transport.ts:108:17)\n    at async Timeout._onTimeout (/elasticsearch/transport.ts:57:17)",
+  "traceId": "da8ae452d454f8bd8b3eb70ba391ebf9",
+  "spanId": "a391dadf506e207b",
+  "timestamp": "2025-12-26 02:27:22.234000000",
+  "_id": "694df2940d14060933b04f03"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

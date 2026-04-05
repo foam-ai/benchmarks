@@ -1,0 +1,105 @@
+# RCA Investigation - Eval 16
+
+**Investigate and fix this error in ONE SINGLE PASS using full telemetry access.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+**REQUIRED MODEL:** You MUST use model: **opus-4.6** and report it in metrics.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `2784423991fa1d7b1dff7c36d7d18efc8c27dbde`  
+**Error Timestamp:** `2026-02-24 17:29:24`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "AI_APICallError",
+  "exceptionMessage": "Resource not found",
+  "exceptionStacktrace": "\"{\"frames\":[{\"filename\":\"/app/node_modules/ai/src/generate-text/generate-text.ts\",\"module\":\"ai.src.generate-text:generate-text.ts\",\"function\":\"fn\",\"lineno\":524,\"colno\":36,\"in_app\":false},{\"filename\":\"/app/node_modules/ai/src/util/retry-with-exponential-backoff.ts\",\"module\":\"ai.src.util:retry-with-exponential-backoff.ts\",\"function\":\"_retryWithExponentialBackoff\",\"lineno\":96,\"colno\":12,\"in_app\":false},{\"filename\":\"/app/node_modules/ai/src/telemetry/record-span.ts\",\"module\":\"ai.src.telemetry:record-span.ts\",\"function\":\"<anonymous>\",\"lineno\":21,\"colno\":24,\"in_app\":false},{\"filename\":\"/app/node_modules/ai/src/generate-text/generate-text.ts\",\"module\":\"ai.src.generate-text:generate-text.ts\",\"function\":\"fn\",\"lineno\":574,\"colno\":34,\"in_app\":false},{\"filename\":\"/app/node_modules/ai/src/model/as-language-model-v3.ts\",\"module\":\"ai.src.model:as-language-model-v3.ts\",\"function\":\"Proxy.?\",\"lineno\":34,\"colno\":28,\"in_app\":false},{\"filename\":\"/app/node_modules/ai-fallback/src/index.ts\",\"module\":\"ai-fallback.src:index.ts\",\"function\":\"FallbackModel.retry\",\"lineno\":130,\"colno\":24,\"in_app\":false,\"pre_context\":[\"\",\" private async retry<T>(fn: () => PromiseLike<T>): Promise<T> {\",\" let lastError: Error | undefined\",\" const initialModel = this.currentModelIndex\",\"\",\" do {\",\" try {\"],\"context_line\":\" return await fn()\",\"post_context\":[\" } catch (error) {\",\" lastError = error as Error\",\" // Only retry if it's a server/capacity error\",\" const shouldRetry =\",\" this.settings.shouldRetryThisError ||\",\" defaultShouldRetryThisError\",\" if (!shouldRetry(lastError)) {\"]},{\"filename\":\"/app/node_modules/@ai-sdk/openai/src/responses/openai-responses-language-model.ts\",\"module\":\"@ai-sdk.openai.src.responses:openai-responses-language-model.ts\",\"function\":\"OpenAIResponsesLanguageModel.doGenerate\",\"lineno\":453,\"colno\":9,\"in_app\":false},{\"filename\":\"/app/node_modules/@ai-sdk/provider-utils/src/post-to-api.ts\",\"module\":\"@ai-sdk.provider-utils.src:post-to-api.ts\",\"function\":\"postToApi\",\"lineno\":118,\"colno\":28,\"in_app\":false},{\"filename\":\"node:internal/process/task_queues\",\"module\":\"task_queues\",\"function\":\"process.processTicksAndRejections\",\"lineno\":105,\"colno\":5,\"in_app\":false},{\"filename\":\"/app/node_modules/@ai-sdk/provider-utils/src/response-handler.ts\",\"module\":\"@ai-sdk.provider-utils.src:response-handler.ts\",\"function\":\"<anonymous>\",\"lineno\":57,\"colno\":16,\"in_app\":false}]}\"\n",
+  "traceId": "5e238a354be6f9813bd6ae5c237c14a6",
+  "spanId": "b29230f29a44ccc4",
+  "parentSpanId": "d142a0921ae1cbc2",
+  "timestamp": "2026-02-24 09:29:24.469000000",
+  "_id": "699d6ee4ddcbb784edd5ffc0"
+}
+```
+
+
+---
+
+## TOOLS AVAILABLE
+
+### queryOtel Tool
+
+**Usage:** 
+```bash
+bash /Users/perla/code/experiments/cursor-qo/16/query-otel.sh --sql "YOUR_SQL_HERE"
+```
+
+**Example:**
+```bash
+bash /Users/perla/code/experiments/cursor-qo/16/query-otel.sh --sql "SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'"
+```
+
+**Tables:**
+- `otel_logs`: Timestamp, TraceId, SpanId, ServiceName, SeverityText, SeverityNumber, Body, LogAttributes, ResourceAttributes
+- `otel_traces`: Timestamp, TraceId, SpanId, ParentSpanId, ServiceName, SpanName, SpanKind, Duration, StatusCode, StatusMessage, SpanAttributes, ResourceAttributes
+
+**Example Queries:**
+```sql
+SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'
+SELECT TraceId, SpanName FROM otel_traces WHERE StatusCode = 'ERROR'
+SELECT SpanName, Duration/1000000000.0 as seconds FROM otel_traces ORDER BY Duration DESC LIMIT 20
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+- **Model used: opus-4.6** ← REQUIRED - DO NOT CHANGE
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-qo/16/opus-4.6/output.md`
+
+---

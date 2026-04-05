@@ -1,0 +1,105 @@
+# RCA Investigation - Eval 0
+
+**Investigate and fix this error in ONE SINGLE PASS using full telemetry access.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+**REQUIRED MODEL:** You MUST use model: **opus-4.6** and report it in metrics.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `88751b2a0bd62c5e8c9b865ef08f9cc1206e7445`  
+**Error Timestamp:** `2026-01-21 03:28:03`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Porygon Server (service-id: `porygon-server`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Issue 5b44b816-8c8d-4850-9860-007c73f2f038 has an empty solution string",
+  "exceptionStacktrace": "Error: Issue 5b44b816-8c8d-4850-9860-007c73f2f038 has an empty solution string\n    at q (/var/task/.next/server/app/(platform)/issues/[issueId]/page.js:2:10958)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "traceId": "3df47fd48e3bc18595edc2bc21b25ee0",
+  "spanId": "791a80d671a975dc",
+  "parentSpanId": "c6c84cbc9542d9e2",
+  "timestamp": "2026-01-21 03:22:20.970000000",
+  "_id": "6970469e9c00f65b5e414cd2"
+}
+```
+
+
+---
+
+## TOOLS AVAILABLE
+
+### queryOtel Tool
+
+**Usage:** 
+```bash
+bash /Users/perla/code/experiments/cursor-qo/0/query-otel.sh --sql "YOUR_SQL_HERE"
+```
+
+**Example:**
+```bash
+bash /Users/perla/code/experiments/cursor-qo/0/query-otel.sh --sql "SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'"
+```
+
+**Tables:**
+- `otel_logs`: Timestamp, TraceId, SpanId, ServiceName, SeverityText, SeverityNumber, Body, LogAttributes, ResourceAttributes
+- `otel_traces`: Timestamp, TraceId, SpanId, ParentSpanId, ServiceName, SpanName, SpanKind, Duration, StatusCode, StatusMessage, SpanAttributes, ResourceAttributes
+
+**Example Queries:**
+```sql
+SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'
+SELECT TraceId, SpanName FROM otel_traces WHERE StatusCode = 'ERROR'
+SELECT SpanName, Duration/1000000000.0 as seconds FROM otel_traces ORDER BY Duration DESC LIMIT 20
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+- **Model used: opus-4.6** ← REQUIRED - DO NOT CHANGE
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-qo/0/opus-4.6/output.md`
+
+---

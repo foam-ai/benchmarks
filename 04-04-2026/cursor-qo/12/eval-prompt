@@ -1,0 +1,104 @@
+# RCA Investigation - Eval 12
+
+**Investigate and fix this error in ONE SINGLE PASS using full telemetry access.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+**REQUIRED MODEL:** You MUST use model: **opus-4.6** and report it in metrics.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `c2509f47c4acc461ae90e9b57265824badf95221`  
+**Error Timestamp:** `2025-12-24 21:22:02`
+
+**Repository:** foam-ai/mono
+
+**Service:** Mono (service-id: `mono`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "TerminalVelocityRetryableError",
+  "exceptionMessage": "Issue Solver (runId: 3daa8451-d9fa-4b72-b3f5-82e880115e76) failed after 3 attempts: Mini-Solver Terminal Velocity job failed: ENOSPC: no space left on device, open '/tmp/tv-lockfiles/worktree-Stream-claims-backend-1da599c41255134baccc9b84e36709526afb...",
+  "exceptionStacktrace": "{\"frames\":[{\"filename\":\"/app/node_modules/bullmq/src/classes/worker.ts\",\"module\":\"bullmq.src.classes:worker.ts\",\"function\":\"<anonymous>\",\"lineno\":884,\"colno\":26,\"in_app\":false},{\"filename\":\"/workers/issue-solver.worker.ts\",\"module\":\"issue-solver.worker.ts\",\"function\":\"MonitoredWorker.MonitoredWorker.connection.host\",\"lineno\":33,\"colno\":9,\"in_app\":true},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":8969,\"colno\":22,\"in_app\":false,\"pre_context\":[\"    }, spanArgs);\",\"  } else {\",\"    return (...fnArgs) => traced(async (span) => {\",\"      if (!hasExplicitInput) {\",\"        span.log({ input: fnArgs });\",\"      }\",\"      const outputResult = fn(...fnArgs);\"],\"context_line\":\"      const output = await outputResult;\",\"post_context\":[\"      if (!hasExplicitOutput) {\",\"        span.log({ output });\",\"      }\",\"      return output;\",\"    }, spanArgs);\",\"  }\",\"}\"]},{\"filename\":\"/workers/issue-solver.worker.ts\",\"module\":\"issue-solver.worker.ts\",\"function\":\"runWithTrace.name\",\"lineno\":43,\"colno\":17,\"in_app\":true},{\"filename\":\"/workers/issue-solver.worker.ts\",\"module\":\"issue-solver.worker.ts\",\"function\":\"<anonymous>\",\"lineno\":83,\"colno\":21,\"in_app\":true},{\"filename\":\"/services/issue-solver/index.ts\",\"module\":\"index.ts\",\"function\":\"solveIssue\",\"lineno\":142,\"colno\":34,\"in_app\":true},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":8969,\"colno\":22,\"in_app\":false,\"pre_context\":[\"    }, spanArgs);\",\"  } else {\",\"    return (...fnArgs) => traced(async (span) => {\",\"      if (!hasExplicitInput) {\",\"        span.log({ input: fnArgs });\",\"      }\",\"      const outputResult = fn(...fnArgs);\"],\"context_line\":\"      const output = await outputResult;\",\"post_context\":[\"      if (!hasExplicitOutput) {\",\"        span.log({ output });\",\"      }\",\"      return output;\",\"    }, spanArgs);\",\"  }\",\"}\"]},{\"filename\":\"node:internal/process/task_queues\",\"module\":\"task_queues\",\"function\":\"process.processTicksAndRejections\",\"lineno\":105,\"colno\":5,\"in_app\":false},{\"filename\":\"/services/terminal-velocity-retry.service.ts\",\"module\":\"terminal-velocity-retry.service.ts\",\"function\":\"withTerminalVelocityRetry\",\"lineno\":155,\"colno\":11,\"in_app\":true},{\"filename\":\"/services/terminal-velocity-retry.service.ts\",\"module\":\"terminal-velocity-retry.service.ts\",\"function\":\"createTerminalVelocityRetryableError\",\"lineno\":38,\"colno\":19,\"in_app\":true}]}",
+  "traceId": "b078e3764078fde9954fcecaad8f58f1",
+  "spanId": "d75935ccd7ceaf25",
+  "timestamp": "2025-12-24 20:46:04.367000000",
+  "_id": "694c512ce499d51a0669c17e"
+}
+```
+
+
+---
+
+## TOOLS AVAILABLE
+
+### queryOtel Tool
+
+**Usage:** 
+```bash
+bash /Users/perla/code/experiments/cursor-qo/12/query-otel.sh --sql "YOUR_SQL_HERE"
+```
+
+**Example:**
+```bash
+bash /Users/perla/code/experiments/cursor-qo/12/query-otel.sh --sql "SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'"
+```
+
+**Tables:**
+- `otel_logs`: Timestamp, TraceId, SpanId, ServiceName, SeverityText, SeverityNumber, Body, LogAttributes, ResourceAttributes
+- `otel_traces`: Timestamp, TraceId, SpanId, ParentSpanId, ServiceName, SpanName, SpanKind, Duration, StatusCode, StatusMessage, SpanAttributes, ResourceAttributes
+
+**Example Queries:**
+```sql
+SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'
+SELECT TraceId, SpanName FROM otel_traces WHERE StatusCode = 'ERROR'
+SELECT SpanName, Duration/1000000000.0 as seconds FROM otel_traces ORDER BY Duration DESC LIMIT 20
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+- **Model used: opus-4.6** ← REQUIRED - DO NOT CHANGE
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-qo/12/opus-4.6/output.md`
+
+---

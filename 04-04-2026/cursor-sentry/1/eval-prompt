@@ -1,0 +1,92 @@
+# RCA Investigation - Eval 1
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `05e8314197f76f99a0c555c5ac644d707a9fafcb`  
+**Error Timestamp:** `2026-01-20 21:39:10`
+
+**Repository:** foam-ai/mono
+
+**Service:** Mono (service-id: `mono`)
+
+**Sentry Issue:** [FOAM-AI-1F6](https://foam-ai-0j.sentry.io/issues/FOAM-AI-1F6)
+
+**Stacktrace:**
+```
+/llms/adapters/base.ts:218:24 (wrapTraced.name)
+/llms/adapters/base.ts:153:27 (chatFunction)
+  at <unknown> (/app/node_modules/braintrust/dist/index.mjs:8964:27)
+  return (...fnArgs) => traced(async (span) => {
+```
+
+
+
+---
+
+## TOOLS AVAILABLE
+
+### Sentry MCP
+
+You have access to Sentry MCP tools to investigate this error in detail:
+
+**Usage:**
+```bash
+get_sentry_resource(resourceType='issue', organizationSlug='foam-ai-0j', resourceId='FOAM-AI-1F6')
+search_issue_events(organizationSlug='foam-ai-0j', issueId='FOAM-AI-1F6', naturalLanguageQuery='...')
+```
+
+**Available Operations:**
+- Fetch full issue details, events, and context
+- Search events by message, timestamp, or trace ID
+- Get breadcrumbs and tags
+- Review all occurrences and error patterns
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-sentry/1/opus-4.6/output.md`
+
+---

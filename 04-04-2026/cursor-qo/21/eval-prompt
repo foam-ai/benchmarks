@@ -1,0 +1,104 @@
+# RCA Investigation - Eval 21
+
+**Investigate and fix this error in ONE SINGLE PASS using full telemetry access.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+**REQUIRED MODEL:** You MUST use model: **opus-4.6** and report it in metrics.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `b03ad8ccbd29bf6931979b2c742f7cd7517c2b4e`  
+**Error Timestamp:** `2026-03-26 03:50:29`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Eval (service-id: `eval`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Issue solver run not found for runId: 3daa8451-d9fa-4b72-b3f5-82e880115e76",
+  "traceId": "f6ab8ba909de0a1e31fd099d55c93cdb",
+  "spanId": "9bc6a5517652297e",
+  "parentSpanId": "7e20dcdacf34b307",
+  "timestamp": "2026-03-17T04:44:54.052Z",
+  "_id": "69c4ad051f7753bf5bf9857d"
+}
+```
+
+
+---
+
+## TOOLS AVAILABLE
+
+### queryOtel Tool
+
+**Usage:** 
+```bash
+bash /Users/perla/code/experiments/cursor-qo/21/query-otel.sh --sql "YOUR_SQL_HERE"
+```
+
+**Example:**
+```bash
+bash /Users/perla/code/experiments/cursor-qo/21/query-otel.sh --sql "SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'"
+```
+
+**Tables:**
+- `otel_logs`: Timestamp, TraceId, SpanId, ServiceName, SeverityText, SeverityNumber, Body, LogAttributes, ResourceAttributes
+- `otel_traces`: Timestamp, TraceId, SpanId, ParentSpanId, ServiceName, SpanName, SpanKind, Duration, StatusCode, StatusMessage, SpanAttributes, ResourceAttributes
+
+**Example Queries:**
+```sql
+SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'
+SELECT TraceId, SpanName FROM otel_traces WHERE StatusCode = 'ERROR'
+SELECT SpanName, Duration/1000000000.0 as seconds FROM otel_traces ORDER BY Duration DESC LIMIT 20
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+- **Model used: opus-4.6** ← REQUIRED - DO NOT CHANGE
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-qo/21/opus-4.6/output.md`
+
+---

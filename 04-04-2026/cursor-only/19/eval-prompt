@@ -1,0 +1,55 @@
+# RCA Investigation - Eval 19
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `201465e0771139d424e02071eae238e5b31d66c5`  
+**Error Timestamp:** `2026-03-27 23:09:39`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Eval (service-id: `eval`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Command failed: git clone --bare \"https://x-access-token:ghs_7vTMhrXEOgs4gAfR1NwtmzARKmLk5z2UQ48m@github.com/foam-ai/mewtwo.git\" \"/tmp/tv-base-repos/foam-ai/mewtwo\"\nCloning into bare repository '/tmp/tv-base-repos/foam-ai/mewtwo'...\nremote: Repositor...",
+  "traceId": "e81c096e74e5dd5ecdf1d6a26a5321a6",
+  "spanId": "606bb6cc01edd1fb",
+  "parentSpanId": "ab55e6bc2cbad638",
+  "timestamp": "2026-01-22T19:36:18.394Z",
+  "_id": "69c70e33d0b6872b75f038d5",
+  "handled": true,
+  "spanName": "Error: Command failed: git clone --bare \"https://x-access-token:...@github.com/foam-ai/mewtwo.git\" \"/tmp/tv-base-repos/foam-ai/mewtwo"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```
