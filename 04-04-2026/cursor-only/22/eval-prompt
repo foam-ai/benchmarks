@@ -1,0 +1,55 @@
+# RCA Investigation - Eval 22
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `4a090765f3518caf3b11ea4e74807a4c6b335030`  
+**Error Timestamp:** `2026-03-27 23:17:29`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Eval (service-id: `eval`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "TypeError",
+  "exceptionMessage": "text2.match is not a function",
+  "traceId": "62fe34100cad8403bdbbe5a7c93becf0",
+  "spanId": "a1a281edb7fcd33e",
+  "parentSpanId": "05272b8d6fcfbd6f",
+  "timestamp": "2026-03-18T01:59:13.350Z",
+  "_id": "69c71009843c9efe6060aef4",
+  "spanName": "TypeError: text2.match is not a function",
+  "handled": true
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

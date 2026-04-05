@@ -1,0 +1,55 @@
+# RCA Investigation - Eval 18
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `c4a0168aba62cc9af9c86b8be6bd401d08da629a`  
+**Error Timestamp:** `2026-03-28 03:24:14`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Eval (service-id: `eval`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "(total) memory limit exceeded: would use 28.74 GiB (attempt to allocate chunk of 16.10 MiB bytes), current RSS: 28.81 GiB, maximum: 28.80 GiB. OvercommitTracker decision: Query was selected to stop by OvercommitTracker: (avg_value_size_hint = 880.080...",
+  "traceId": "d103a5b3b6e73484dfb39170cf1a554c",
+  "spanId": "f568bdb57fc6eefc",
+  "parentSpanId": "8b148052e9e87b6b",
+  "timestamp": "2026-01-30T00:23:45.432Z",
+  "_id": "69c749de64ae83a94d32f494",
+  "spanName": "Error: (total) memory limit exceeded: would use 28.74 GiB (attempt to allocate chunk of 16.10 MiB bytes), current RSS: 28.81 GiB, maximum: 28.80 GiB. OvercommitTracker decision: Query was selected to stop by OvercommitTracker",
+  "handled": true
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

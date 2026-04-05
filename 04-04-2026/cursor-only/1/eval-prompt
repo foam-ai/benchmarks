@@ -1,0 +1,53 @@
+# RCA Investigation - Eval 1
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `05e8314197f76f99a0c555c5ac644d707a9fafcb`  
+**Error Timestamp:** `2026-01-20 21:39:10`
+
+**Repository:** foam-ai/mono
+
+**Service:** Mono (service-id: `mono`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Tool ordering is not supported by AnthropicBedrockAdapter. Only OpenAI adapter currently supports per-turn tool ordering.",
+  "exceptionStacktrace": "{\"frames\":[{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":8964,\"colno\":27,\"in_app\":false,\"pre_context\":[\"        } else {\",\"          span.log({ output });\",\"        }\",\"      }\",\"      return output;\",\"    }, spanArgs);\",\"  } else {\"],\"context_line\":\"    return (...fnArgs) => traced(async (span) => {\",\"post_context\":[\"      if (!hasExplicitInput) {\",\"        span.log({ input: fnArgs });\",\"      }\",\"      const outputResult = fn(...fnArgs);\",\"      const output = await outputResult;\",\"      if (!hasExplicitOutput) {\",\"        span.log({ output });\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"traced\",\"lineno\":8799,\"colno\":15,\"in_app\":false,\"pre_context\":[\"  }\",\"  span.log({ error: `${errorMessage}\",\"\",\"${stackTrace}` });\",\"}\",\"function traced(callback, args) {\",\"  const { span, isSyncFlushLogger } = startSpanAndIsLogger(args);\"],\"context_line\":\"  const ret = runCatchFinally(\",\"post_context\":[\"    () => {\",\"      if (args?.setCurrent ?? true) {\",\"        return withCurrent(span, callback);\",\"      } else {\",\"        return callback(span);\",\"      }\",\"    },\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"runCatchFinally\",\"lineno\":6278,\"colno\":17,\"in_app\":false,\"pre_context\":[\"};\",\"\",\"// src/util.ts\",\"var GLOBAL_PROJECT = \\\"Global\\\";\",\"function runCatchFinally(f, catchF, finallyF) {\",\"  let runSyncCleanup = true;\",\"  try {\"],\"context_line\":\"    const ret = f();\",\"post_context\":[\"    if (ret instanceof Promise) {\",\"      runSyncCleanup = false;\",\"      return ret.catch(catchF).finally(finallyF);\",\"    } else {\",\"      return ret;\",\"    }\",\"  } catch (e) {\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":8802,\"colno\":16,\"in_app\":false,\"pre_context\":[\"${stackTrace}` });\",\"}\",\"function traced(callback, args) {\",\"  const { span, isSyncFlushLogger } = startSpanAndIsLogger(args);\",\"  const ret = runCatchFinally(\",\"    () => {\",\"      if (args?.setCurrent ?? true) {\"],\"context_line\":\"        return withCurrent(span, callback);\",\"post_context\":[\"      } else {\",\"        return callback(span);\",\"      }\",\"    },\",\"    (e) => {\",\"      logError(span, e);\",\"      throw e;\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"withCurrent\",\"lineno\":9027,\"colno\":46,\"in_app\":false,\"pre_context\":[\"    return {\",\"      span,\",\"      isSyncFlushLogger: parentObject.kind === \\\"logger\\\" && parentObject.asyncFlush === false\",\"    };\",\"  }\",\"}\",\"function withCurrent(span, callback, state = void 0) {\"],\"context_line\":\"  return (state ?? _globalState).currentSpan.run(span, () => callback(span));\",\"post_context\":[\"}\",\"function* generatorWithCurrent(span, gen, state = void 0) {\",\"  let nextValue;\",\"  while (true) {\",\"    const result = withCurrent(\",\"      span,\",\"      () => {\"]},{\"filename\":\"node:internal/async_local_storage/async_hooks\",\"module\":\"async_hooks\",\"function\":\"AsyncLocalStorage.run\",\"lineno\":91,\"colno\":14,\"in_app\":false},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":9027,\"colno\":62,\"in_app\":false,\"pre_context\":[\"    return {\",\"      span,\",\"      isSyncFlushLogger: parentObject.kind === \\\"logger\\\" && parentObject.asyncFlush === false\",\"    };\",\"  }\",\"}\",\"function withCurrent(span, callback, state = void 0) {\"],\"context_line\":\"  return (state ?? _globalState).currentSpan.run(span, () => callback(span));\",\"post_context\":[\"}\",\"function* generatorWithCurrent(span, gen, state = void 0) {\",\"  let nextValue;\",\"  while (true) {\",\"    const result = withCurrent(\",\"      span,\",\"      () => {\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":8968,\"colno\":28,\"in_app\":false,\"pre_context\":[\"      return output;\",\"    }, spanArgs);\",\"  } else {\",\"    return (...fnArgs) => traced(async (span) => {\",\"      if (!hasExplicitInput) {\",\"        span.log({ input: fnArgs });\",\"      }\"],\"context_line\":\"      const outputResult = fn(...fnArgs);\",\"post_context\":[\"      const output = await outputResult;\",\"      if (!hasExplicitOutput) {\",\"        span.log({ output });\",\"      }\",\"      return output;\",\"    }, spanArgs);\",\"  }\"]},{\"filename\":\"/llms/adapters/base.ts\",\"module\":\"base.ts\",\"function\":\"wrapTraced.name\",\"lineno\":218,\"colno\":24,\"in_app\":true},{\"filename\":\"/llms/adapters/base.ts\",\"module\":\"base.ts\",\"function\":\"chatFunction\",\"lineno\":153,\"colno\":27,\"in_app\":true}]}",
+  "traceId": "b30b1e21f8bd06b302d1bc92d755325a",
+  "spanId": "cc91714721c0c5eb",
+  "timestamp": "2026-01-05 16:39:12.074000000",
+  "_id": "695c3b70f190a806b741be35"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

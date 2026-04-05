@@ -1,0 +1,53 @@
+# RCA Investigation - Eval 3
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `c2509f47c4acc461ae90e9b57265824badf95221`  
+**Error Timestamp:** `2025-12-27 04:10:21`
+
+**Repository:** foam-ai/mono
+
+**Service:** Mono (service-id: `mono`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Sentry projectId: 4509119107891200 not found for company: longeye with installationId: 2169a967-cd48-4097-bcdc-e1bbcbf59631",
+  "exceptionStacktrace": "{\"frames\":[{\"filename\":\"/routers/sentry/webhook.ts\",\"module\":\"webhook.ts\",\"function\":\"<anonymous>\",\"lineno\":183,\"colno\":17,\"in_app\":true},{\"filename\":\"/routers/sentry/webhook.ts\",\"module\":\"webhook.ts\",\"function\":\"handleIssue\",\"lineno\":308,\"colno\":5,\"in_app\":true},{\"filename\":\"/routers/sentry/webhook.ts\",\"module\":\"webhook.ts\",\"function\":\"runIssueSolverPipeline\",\"lineno\":443,\"colno\":19,\"in_app\":true},{\"filename\":\"/routers/sentry/webhook.ts\",\"module\":\"webhook.ts\",\"function\":\"runSolverPipeline\",\"lineno\":505,\"colno\":23,\"in_app\":true},{\"filename\":\"/services/issue-solver/factory.ts\",\"module\":\"factory.ts\",\"function\":\"buildAndStoreIssueSolverRun\",\"lineno\":158,\"colno\":27,\"in_app\":true},{\"filename\":\"/mongodb/services/sentry.service.ts\",\"module\":\"sentry.service.ts\",\"function\":\"findSentryProjectByProjectId\",\"lineno\":252,\"colno\":12,\"in_app\":true},{\"filename\":\"/app/node_modules/mongoose/lib/connection.js\",\"module\":\"mongoose.lib:connection\",\"function\":\"NativeConnection.withSession\",\"lineno\":656,\"colno\":10,\"in_app\":false,\"pre_context\":[\" * @api public\",\" */\",\"\",\"Connection.prototype.withSession = async function withSession(executor) {\",\"  if (arguments.length === 0) {\",\"    throw new Error('Please provide an executor function');\",\"  }\"],\"context_line\":\"  return await this.client.withSession(executor);\",\"post_context\":[\"};\",\"\",\"/**\",\" * _Requires MongoDB >= 3.6.0._ Starts a [MongoDB session](https://www.mongodb.com/docs/manual/release-notes/3.6/#client-sessions)\",\" * for benefits like causal consistency, [retryable writes](https://www.mongodb.com/docs/manual/core/retryable-writes/),\",\" * and [transactions](https://thecodebarbarian.com/a-node-js-perspective-on-mongodb-4-transactions.html).\",\" *\"]},{\"filename\":\"/app/node_modules/mongodb/src/mongo_client.ts\",\"module\":\"mongodb.src:mongo_client.ts\",\"function\":\"MongoClient.withSession\",\"lineno\":879,\"colno\":14,\"in_app\":false,\"pre_context\":[\"    if (withSessionCallback == null) {\",\"      throw new MongoInvalidArgumentError('Missing required callback parameter');\",\"    }\",\"\",\"    const session = this.startSession(options);\",\"\",\"    try {\"],\"context_line\":\"      return await withSessionCallback(session);\",\"post_context\":[\"    } finally {\",\"      try {\",\"        await session.endSession();\",\"      } catch (error) {\",\"        squashError(error);\",\"      }\",\"    }\"]},{\"filename\":\"node:internal/process/task_queues\",\"module\":\"task_queues\",\"function\":\"process.processTicksAndRejections\",\"lineno\":105,\"colno\":5,\"in_app\":false},{\"filename\":\"/mongodb/services/sentry.service.ts\",\"module\":\"sentry.service.ts\",\"function\":\"<anonymous>\",\"lineno\":259,\"colno\":19,\"in_app\":true}]}",
+  "traceId": "aa465a4a31a3c88ad7dbe8987ddd6537",
+  "spanId": "5226b43ea9a946f1",
+  "timestamp": "2025-12-25 01:20:53.093000000",
+  "_id": "694c9182e499d51a066ae668"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

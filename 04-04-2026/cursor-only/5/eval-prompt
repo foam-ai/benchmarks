@@ -1,0 +1,54 @@
+# RCA Investigation - Eval 5
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `9f0a4f5eed323e910952b9abcd6a4ee05b8b31ee`  
+**Error Timestamp:** `2026-01-21 23:35:12`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Solution result is empty for runId: eb581e69-4677-42d6-b609-fa619edcd608. Cannot mark as completed with empty solution.",
+  "exceptionStacktrace": "{\"frames\":[{\"filename\":\"/app/mewtwo/src/services/issue-solver/index.ts\",\"module\":\"index.ts\",\"function\":\"solveIssue\",\"lineno\":41,\"colno\":8,\"in_app\":true,\"pre_context\":[\"\\t */\",\"\\tlogKPI(Step.FOAM_ISSUE_RECEIVED, customer, runId);\",\"\\tconst solverResult = await runDefault(run);\",\"\",\"\\tlog().info(\",\"\\t\\t`Running side effects${options.dbOnlyMode ? ' (dbOnlyMode: true)' : ''} for companyName: ${customer.companyName} runId: ${runId}`,\",\"\\t);\"],\"context_line\":\"\\tawait runSideEffects({\",\"post_context\":[\"\\t\\trun,\",\"\\t\\tcustomer,\",\"\\t\\tsolverResult,\",\"\\t\\tdbOnlyMode: options.dbOnlyMode,\",\"\\t\\tnotificationsEnabled: options.notificationsEnabled,\",\"\\t});\",\"\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":8964,\"colno\":27,\"in_app\":false,\"pre_context\":[\"        } else {\",\"          span.log({ output });\",\"        }\",\"      }\",\"      return output;\",\"    }, spanArgs);\",\"  } else {\"],\"context_line\":\"    return (...fnArgs) => traced(async (span) => {\",\"post_context\":[\"      if (!hasExplicitInput) {\",\"        span.log({ input: fnArgs });\",\"      }\",\"      const outputResult = fn(...fnArgs);\",\"      const output = await outputResult;\",\"      if (!hasExplicitOutput) {\",\"        span.log({ output });\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"traced\",\"lineno\":8799,\"colno\":15,\"in_app\":false,\"pre_context\":[\"  }\",\"  span.log({ error: `${errorMessage}\",\"\",\"${stackTrace}` });\",\"}\",\"function traced(callback, args) {\",\"  const { span, isSyncFlushLogger } = startSpanAndIsLogger(args);\"],\"context_line\":\"  const ret = runCatchFinally(\",\"post_context\":[\"    () => {\",\"      if (args?.setCurrent ?? true) {\",\"        return withCurrent(span, callback);\",\"      } else {\",\"        return callback(span);\",\"      }\",\"    },\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"runCatchFinally\",\"lineno\":6278,\"colno\":17,\"in_app\":false,\"pre_context\":[\"};\",\"\",\"// src/util.ts\",\"var GLOBAL_PROJECT = \\\"Global\\\";\",\"function runCatchFinally(f, catchF, finallyF) {\",\"  let runSyncCleanup = true;\",\"  try {\"],\"context_line\":\"    const ret = f();\",\"post_context\":[\"    if (ret instanceof Promise) {\",\"      runSyncCleanup = false;\",\"      return ret.catch(catchF).finally(finallyF);\",\"    } else {\",\"      return ret;\",\"    }\",\"  } catch (e) {\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":8802,\"colno\":16,\"in_app\":false,\"pre_context\":[\"${stackTrace}` });\",\"}\",\"function traced(callback, args) {\",\"  const { span, isSyncFlushLogger } = startSpanAndIsLogger(args);\",\"  const ret = runCatchFinally(\",\"    () => {\",\"      if (args?.setCurrent ?? true) {\"],\"context_line\":\"        return withCurrent(span, callback);\",\"post_context\":[\"      } else {\",\"        return callback(span);\",\"      }\",\"    },\",\"    (e) => {\",\"      logError(span, e);\",\"      throw e;\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"withCurrent\",\"lineno\":9027,\"colno\":46,\"in_app\":false,\"pre_context\":[\"    return {\",\"      span,\",\"      isSyncFlushLogger: parentObject.kind === \\\"logger\\\" && parentObject.asyncFlush === false\",\"    };\",\"  }\",\"}\",\"function withCurrent(span, callback, state = void 0) {\"],\"context_line\":\"  return (state ?? _globalState).currentSpan.run(span, () => callback(span));\",\"post_context\":[\"}\",\"function* generatorWithCurrent(span, gen, state = void 0) {\",\"  let nextValue;\",\"  while (true) {\",\"    const result = withCurrent(\",\"      span,\",\"      () => {\"]},{\"filename\":\"node:internal/async_local_storage/async_hooks\",\"module\":\"async_hooks\",\"function\":\"AsyncLocalStorage.run\",\"lineno\":91,\"colno\":14,\"in_app\":false},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":9027,\"colno\":62,\"in_app\":false,\"pre_context\":[\"    return {\",\"      span,\",\"      isSyncFlushLogger: parentObject.kind === \\\"logger\\\" && parentObject.asyncFlush === false\",\"    };\",\"  }\",\"}\",\"function withCurrent(span, callback, state = void 0) {\"],\"context_line\":\"  return (state ?? _globalState).currentSpan.run(span, () => callback(span));\",\"post_context\":[\"}\",\"function* generatorWithCurrent(span, gen, state = void 0) {\",\"  let nextValue;\",\"  while (true) {\",\"    const result = withCurrent(\",\"      span,\",\"      () => {\"]},{\"filename\":\"/app/node_modules/braintrust/dist/index.mjs\",\"module\":\"braintrust.dist:index\",\"function\":\"?\",\"lineno\":8968,\"colno\":28,\"in_app\":false,\"pre_context\":[\"      return output;\",\"    }, spanArgs);\",\"  } else {\",\"    return (...fnArgs) => traced(async (span) => {\",\"      if (!hasExplicitInput) {\",\"        span.log({ input: fnArgs });\",\"      }\"],\"context_line\":\"      const outputResult = fn(...fnArgs);\",\"post_context\":[\"      const output = await outputResult;\",\"      if (!hasExplicitOutput) {\",\"        span.log({ output });\",\"      }\",\"      return output;\",\"    }, spanArgs);\",\"  }\"]},{\"filename\":\"/app/mewtwo/src/services/issue-solver/side-effects/index.ts\",\"module\":\"index.ts\",\"function\":\"runSideEffects\",\"lineno\":31,\"colno\":17,\"in_app\":true,\"pre_context\":[\"}): Promise<void> {\",\"\\tconst runId = run.runId;\",\"\\tconst repoOwner = run.metadata.repoOwner;\",\"\\tconst repoName = run.metadata.repoName;\",\"\",\"\\t// Validate that solution result is not empty\",\"\\tif (!result || result.trim().length === 0) {\"],\"context_line\":\"\\t\\tconst error = new Error(\",\"post_context\":[\"\\t\\t\\t`Solution result is empty for runId: ${runId}. Cannot mark as completed with empty solution.`,\",\"\\t\\t);\",\"\\t\\tlog().error(`[SideEffects] Empty solution detected`, {\",\"\\t\\t\\trunId,\",\"\\t\\t\\tcustomerId: customer._id.toString(),\",\"\\t\\t\\tcompanyName: customer.companyName,\",\"\\t\\t\\tresultLength: result?.length || 0,\"]}]}",
+  "traceId": "4476aee1d2c728dad742dc83d95c3db9",
+  "spanId": "21298b4966a75df1",
+  "parentSpanId": "0be1090c739927d2",
+  "timestamp": "2026-01-21 23:34:36.406000000",
+  "_id": "697162b0bef5662a06ee81ca"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

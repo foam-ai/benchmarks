@@ -1,0 +1,105 @@
+# RCA Investigation - Eval 2
+
+**Investigate and fix this error in ONE SINGLE PASS using full telemetry access.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+**REQUIRED MODEL:** You MUST use model: **opus-4.6** and report it in metrics.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `c2509f47c4acc461ae90e9b57265824badf95221`  
+**Error Timestamp:** `2026-02-23 21:00:34`
+
+**Repository:** foam-ai/mono
+
+**Service:** Mono (service-id: `mono`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "ReplyError",
+  "exceptionMessage": "OOM command not allowed when used memory > 'maxmemory'. script: cc4eded989ba9b04d25cc2407a1142f33a30400e, on @user_script:26.",
+  "exceptionStacktrace": "ReplyError: OOM command not allowed when used memory > 'maxmemory'. script: cc4eded989ba9b04d25cc2407a1142f33a30400e, on @user_script:26.\n    at parseError (/app/node_modules/redis-parser/lib/parser.js:179:12)\n    at parseType (/app/node_modules/redis-parser/lib/parser.js:302:14)",
+  "traceId": "b2eb0b80f0a721f2a2b8b3c11c9f169d",
+  "spanId": "65af1fb700df34f3",
+  "parentSpanId": "c9d25acabb0ee8f3",
+  "timestamp": "2026-01-29 07:05:10.345000000",
+  "_id": "697b06c12f68d78d74e96e5d"
+}
+```
+
+
+---
+
+## TOOLS AVAILABLE
+
+### queryOtel Tool
+
+**Usage:** 
+```bash
+bash /Users/perla/code/experiments/cursor-qo/2/query-otel.sh --sql "YOUR_SQL_HERE"
+```
+
+**Example:**
+```bash
+bash /Users/perla/code/experiments/cursor-qo/2/query-otel.sh --sql "SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'"
+```
+
+**Tables:**
+- `otel_logs`: Timestamp, TraceId, SpanId, ServiceName, SeverityText, SeverityNumber, Body, LogAttributes, ResourceAttributes
+- `otel_traces`: Timestamp, TraceId, SpanId, ParentSpanId, ServiceName, SpanName, SpanKind, Duration, StatusCode, StatusMessage, SpanAttributes, ResourceAttributes
+
+**Example Queries:**
+```sql
+SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'
+SELECT TraceId, SpanName FROM otel_traces WHERE StatusCode = 'ERROR'
+SELECT SpanName, Duration/1000000000.0 as seconds FROM otel_traces ORDER BY Duration DESC LIMIT 20
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+- **Model used: opus-4.6** ← REQUIRED - DO NOT CHANGE
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-qo/2/opus-4.6/output.md`
+
+---

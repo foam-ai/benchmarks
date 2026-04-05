@@ -1,0 +1,54 @@
+# RCA Investigation - Eval 4
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `332fbe584edd6e21c5b743b5fa955e05e18bb0dd`  
+**Error Timestamp:** `2026-01-11 08:08:43`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Syntax error: failed at position 26 (500) (line 1, col 26): 500 FORMAT JSONEachRow. Expected end of query. ",
+  "exceptionStacktrace": "{\"frames\":[{\"filename\":\"node:internal/process/task_queues\",\"module\":\"task_queues\",\"function\":\"process.processTicksAndRejections\",\"lineno\":105,\"colno\":5,\"in_app\":false},{\"filename\":\"/app/node_modules/packages/client-node/src/connection/node_base_connection.ts\",\"module\":\"packages.client-node.src.connection:node_base_connection.ts\",\"function\":\"ClientRequest.onResponse\",\"lineno\":553,\"colno\":25,\"in_app\":false},{\"filename\":\"/app/node_modules/packages/client-common/src/error/error.ts\",\"module\":\"packages.client-common.src.error:error.ts\",\"function\":\"parseError\",\"lineno\":31,\"colno\":12,\"in_app\":false}]}",
+  "traceId": "22f571223cda9f7e49fa70afbeac1d97",
+  "spanId": "7ea65f1036115efb",
+  "parentSpanId": "fd87c116a2948067",
+  "timestamp": "2026-01-18 18:15:57.239000000",
+  "_id": "69635a8bcc77e0cd4dd8fd21"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

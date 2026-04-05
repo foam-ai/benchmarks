@@ -1,0 +1,47 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+*.pem
+*.key
+*.pub
+
+# Credentials and API keys
+credentials.json
+secrets.json
+config.local.json
+config.*.local.json
+.aws
+.ssh
+.auth
+
+# IDE and OS
+.DS_Store
+.vscode
+.idea
+*.swp
+*.swo
+node_modules
+dist
+build
+
+# Logs
+*.log
+logs/
+
+# Private data files
+private/
+sensitive/
+.credentials
+*.keystore
+
+*tmp*
+
+# query tools for cursor-qo are sensitive and should not be committed
+*query*.sh*
+*query*.ts*
+
+# benchmark master prompts are sensitive and should not be committed
+*MASTER_PROMPT*

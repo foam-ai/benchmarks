@@ -1,0 +1,55 @@
+# RCA Investigation - Eval 20
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `917a8ca81d3adbe16e1f6f539a500bd36f6ebf1d`  
+**Error Timestamp:** `2026-03-28 01:15:36`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Command failed: git worktree add \"/tmp/tv-worktrees/674e5380f251f603c5ef1847/foam-ai-all-the-things/f175628105d88fb710838e61f5570bbe5734fac5\" \"f175628105d88fb710838e61f5570bbe5734fac5\"\nPreparing worktree (detached HEAD f1756281)\nfatal: '/tmp/tv-workt...",
+  "traceId": "c7d51f71ea896eecc668b9d652812cfc",
+  "spanId": "8c505da10053255c",
+  "parentSpanId": "9c74278c6b773a9d",
+  "timestamp": "2026-01-20T03:23:58.291Z",
+  "_id": "69c72bb86caf3bd2c9c99e11",
+  "handled": true,
+  "spanName": "Error: Command failed: git worktree add \"/tmp/tv-worktrees/674e5380f251f603c5ef1847/foam-ai-all-the-things/f175628105d88fb710838e61f5570bbe5734fac5\" \"f175628105d88fb710838e61f5570bbe5734fac5\""
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

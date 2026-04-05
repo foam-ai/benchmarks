@@ -1,0 +1,105 @@
+# RCA Investigation - Eval 13
+
+**Investigate and fix this error in ONE SINGLE PASS using full telemetry access.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+**REQUIRED MODEL:** You MUST use model: **opus-4.6** and report it in metrics.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `c816cd776a3f73a6650154edfa326ae2a2753673`  
+**Error Timestamp:** `2026-01-16 04:56:39`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Command timed out after 7200000ms",
+  "exceptionStacktrace": "{\"frames\":[{\"filename\":\"node:internal/timers\",\"module\":\"timers\",\"function\":\"process.processTimers\",\"lineno\":523,\"colno\":7,\"in_app\":false},{\"filename\":\"node:internal/timers\",\"module\":\"timers\",\"function\":\"listOnTimeout\",\"lineno\":588,\"colno\":17,\"in_app\":false},{\"filename\":\"/app/mewtwo/src/workers/eval.worker.ts\",\"module\":\"eval.worker.ts\",\"function\":\"Timeout._onTimeout\",\"lineno\":100,\"colno\":36,\"in_app\":true,\"pre_context\":[\"                    });\",\"\",\"                    // Handle timeout\",\"                    if (timeout) {\",\"                        setTimeout(() => {\",\"                            clearInterval(flushTimer);\",\"                            child.kill();\"],\"context_line\":\"                            reject(new Error(`Command timed out after ${timeout}ms`));\",\"post_context\":[\"                        }, timeout);\",\"                    }\",\"                });\",\"\",\"                await job.log('✅ Completed');\",\"            } catch (error) {\",\"                Sentry.captureException(error, { extra: { jobId: job.id, command } });\"]}]}",
+  "traceId": "8d8c37c911193455a091fa78a22d7627",
+  "spanId": "63d6240285ac09dd",
+  "parentSpanId": "df293889b65f0629",
+  "timestamp": "2026-01-16 04:56:07.859000000",
+  "_id": "6969c5073c4bda6a3499b22d"
+}
+```
+
+
+---
+
+## TOOLS AVAILABLE
+
+### queryOtel Tool
+
+**Usage:** 
+```bash
+bash /Users/perla/code/experiments/cursor-qo/13/query-otel.sh --sql "YOUR_SQL_HERE"
+```
+
+**Example:**
+```bash
+bash /Users/perla/code/experiments/cursor-qo/13/query-otel.sh --sql "SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'"
+```
+
+**Tables:**
+- `otel_logs`: Timestamp, TraceId, SpanId, ServiceName, SeverityText, SeverityNumber, Body, LogAttributes, ResourceAttributes
+- `otel_traces`: Timestamp, TraceId, SpanId, ParentSpanId, ServiceName, SpanName, SpanKind, Duration, StatusCode, StatusMessage, SpanAttributes, ResourceAttributes
+
+**Example Queries:**
+```sql
+SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'
+SELECT TraceId, SpanName FROM otel_traces WHERE StatusCode = 'ERROR'
+SELECT SpanName, Duration/1000000000.0 as seconds FROM otel_traces ORDER BY Duration DESC LIMIT 20
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+- **Model used: opus-4.6** ← REQUIRED - DO NOT CHANGE
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-qo/13/opus-4.6/output.md`
+
+---

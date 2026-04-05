@@ -1,0 +1,54 @@
+# RCA Investigation - Eval 0
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `88751b2a0bd62c5e8c9b865ef08f9cc1206e7445`  
+**Error Timestamp:** `2026-01-21 03:28:03`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Porygon Server (service-id: `porygon-server`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Issue 5b44b816-8c8d-4850-9860-007c73f2f038 has an empty solution string",
+  "exceptionStacktrace": "Error: Issue 5b44b816-8c8d-4850-9860-007c73f2f038 has an empty solution string\n    at q (/var/task/.next/server/app/(platform)/issues/[issueId]/page.js:2:10958)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "traceId": "3df47fd48e3bc18595edc2bc21b25ee0",
+  "spanId": "791a80d671a975dc",
+  "parentSpanId": "c6c84cbc9542d9e2",
+  "timestamp": "2026-01-21 03:22:20.970000000",
+  "_id": "6970469e9c00f65b5e414cd2"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

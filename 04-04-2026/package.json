@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "autoevals": "^0.0.132",
+    "glob": "^13.0.6"
+  }
+}

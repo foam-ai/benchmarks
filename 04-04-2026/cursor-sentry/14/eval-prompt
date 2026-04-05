@@ -1,0 +1,89 @@
+# RCA Investigation - Eval 14
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `ec83a675077ee3c78205f16ad9e0d34b74e074a6`  
+**Error Timestamp:** `2026-01-05 00:35:22`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** porygon-browser (service-id: `porygon-browser`)
+
+**Sentry Issue:** [PORYGON-M](https://foam-ai-0j.sentry.io/issues/PORYGON-M)
+
+**Stacktrace:**
+```
+No stacktrace available (Next.js Server Component error)
+```
+
+
+
+---
+
+## TOOLS AVAILABLE
+
+### Sentry MCP
+
+You have access to Sentry MCP tools to investigate this error in detail:
+
+**Usage:**
+```bash
+get_sentry_resource(resourceType='issue', organizationSlug='foam-ai-0j', resourceId='PORYGON-M')
+search_issue_events(organizationSlug='foam-ai-0j', issueId='PORYGON-M', naturalLanguageQuery='...')
+```
+
+**Available Operations:**
+- Fetch full issue details, events, and context
+- Search events by message, timestamp, or trace ID
+- Get breadcrumbs and tags
+- Review all occurrences and error patterns
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-sentry/14/opus-4.6/output.md`
+
+---

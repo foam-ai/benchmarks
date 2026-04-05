@@ -1,0 +1,105 @@
+# RCA Investigation - Eval 9
+
+**Investigate and fix this error in ONE SINGLE PASS using full telemetry access.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+**REQUIRED MODEL:** You MUST use model: **opus-4.6** and report it in metrics.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `f6c277f9ba3137e3214d3336bf6347d4c795060b`  
+**Error Timestamp:** `2026-01-23 18:58:25`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Eval (service-id: `eval`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "AI_RetryError",
+  "exceptionMessage": "Failed after 3 attempts. Last error: Not Found",
+  "exceptionStacktrace": "AI_RetryError: Failed after 3 attempts. Last error: Not Found at _retryWithExponentialBackoff (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:429432:13) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async streamStep (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:433431:15) at async fn (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:433800:9) at async eval (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:429180:24)",
+  "traceId": "02d17b5bd629ce1579e8875ac7e0acd0",
+  "spanId": "6a41056561f7f1ec",
+  "parentSpanId": "710fd7b8de7f8db8",
+  "timestamp": "2026-01-22 21:55:07.431000000",
+  "_id": "69727d38a4ebcb457bcd1692"
+}
+```
+
+
+---
+
+## TOOLS AVAILABLE
+
+### queryOtel Tool
+
+**Usage:** 
+```bash
+bash /Users/perla/code/experiments/cursor-qo/9/query-otel.sh --sql "YOUR_SQL_HERE"
+```
+
+**Example:**
+```bash
+bash /Users/perla/code/experiments/cursor-qo/9/query-otel.sh --sql "SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'"
+```
+
+**Tables:**
+- `otel_logs`: Timestamp, TraceId, SpanId, ServiceName, SeverityText, SeverityNumber, Body, LogAttributes, ResourceAttributes
+- `otel_traces`: Timestamp, TraceId, SpanId, ParentSpanId, ServiceName, SpanName, SpanKind, Duration, StatusCode, StatusMessage, SpanAttributes, ResourceAttributes
+
+**Example Queries:**
+```sql
+SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'
+SELECT TraceId, SpanName FROM otel_traces WHERE StatusCode = 'ERROR'
+SELECT SpanName, Duration/1000000000.0 as seconds FROM otel_traces ORDER BY Duration DESC LIMIT 20
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+- **Model used: opus-4.6** ← REQUIRED - DO NOT CHANGE
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-qo/9/opus-4.6/output.md`
+
+---

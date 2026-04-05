@@ -1,0 +1,54 @@
+# RCA Investigation - Eval 10
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `f6c277f9ba3137e3214d3336bf6347d4c795060b`  
+**Error Timestamp:** `2026-01-22 19:47:15`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Eval (service-id: `eval`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "AI_APICallError",
+  "exceptionMessage": "Not Found",
+  "exceptionStacktrace": "AI_APICallError: Not Found\n    at eval (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:426553:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async postToApi (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:426401:28)\n    at async AnthropicMessagesLanguageModel2.doStream (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:442021:50)\n    at async eval (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:434787:22)\n    at async FallbackModel.retry (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:434761:16)\n    at async eval (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:434787:22)\n    at async FallbackModel.retry (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:434761:16)\n    at async Proxy.eval (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:427990:28)\n    at async fn (eval at <anonymous> (/home/runner/work/all-the-things/all-the-things/node_modules/braintrust/dist/cli.js:10420:5), <anonymous>:433474:25)",
+  "traceId": "d3a9955e545d1917cdec8c94497df9a1",
+  "spanId": "2c7eb868231ca02a",
+  "parentSpanId": "c7cf0b275408448c",
+  "timestamp": "2026-01-22 19:46:55.143000000",
+  "_id": "69727ebea4ebcb457bcf1d73"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

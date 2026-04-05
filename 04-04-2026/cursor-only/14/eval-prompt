@@ -1,0 +1,53 @@
+# RCA Investigation - Eval 14
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `ec83a675077ee3c78205f16ad9e0d34b74e074a6`  
+**Error Timestamp:** `2026-01-05 00:35:22`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** porygon-browser (service-id: `porygon-browser`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of ...",
+  "exceptionStacktrace": "",
+  "traceId": "1af94798049778d815120d490fc0f9a3",
+  "spanId": "1d6f235aca85fb07",
+  "timestamp": "2026-01-03 22:47:02.496000000",
+  "_id": "6959a0ea4093d29ae8520cb7"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```

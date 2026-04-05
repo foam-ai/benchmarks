@@ -1,0 +1,91 @@
+# RCA Investigation - Eval 4
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `332fbe584edd6e21c5b743b5fa955e05e18bb0dd`  
+**Error Timestamp:** `2026-01-11 08:08:43`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+**Sentry Issue:** [MEWTWO-8](https://foam-ai-0j.sentry.io/issues/MEWTWO-8)
+
+**Stacktrace:**
+```
+/app/node_modules/packages/client-common/src/error/error.ts:31:12 (parseError)
+/app/node_modules/packages/client-node/src/connection/node_base_connection.ts:553:25 (ClientRequest.onResponse)
+  at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+```
+
+
+
+---
+
+## TOOLS AVAILABLE
+
+### Sentry MCP
+
+You have access to Sentry MCP tools to investigate this error in detail:
+
+**Usage:**
+```bash
+get_sentry_resource(resourceType='issue', organizationSlug='foam-ai-0j', resourceId='MEWTWO-8')
+search_issue_events(organizationSlug='foam-ai-0j', issueId='MEWTWO-8', naturalLanguageQuery='...')
+```
+
+**Available Operations:**
+- Fetch full issue details, events, and context
+- Search events by message, timestamp, or trace ID
+- Get breadcrumbs and tags
+- Review all occurrences and error patterns
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-sentry/4/opus-4.6/output.md`
+
+---

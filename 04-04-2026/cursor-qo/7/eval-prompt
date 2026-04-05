@@ -1,0 +1,105 @@
+# RCA Investigation - Eval 7
+
+**Investigate and fix this error in ONE SINGLE PASS using full telemetry access.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+**REQUIRED MODEL:** You MUST use model: **opus-4.6** and report it in metrics.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `13e460e338f57c9900a1328ccc134d75b16c188f`  
+**Error Timestamp:** `2026-03-02 02:37:05`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Failed to process batch for 674e5380f251f603c5ef1847:webapp-browser: Traceback (most recent call last):\n  File \"/lib/python313.zip/_pyodide/_base.py\", line 597, in eval_code_async\n    await CodeRunner(\n    ...<9 lines>...\n    .run_async(globals, loca...",
+  "exceptionStacktrace": "{\"frames\":[{\"filename\":\"/app/node_modules/bullmq/src/classes/worker.ts\",\"module\":\"bullmq.src.classes:worker.ts\",\"function\":\"MonitoredWorker.retryIfFailed\",\"lineno\":1251,\"colno\":16,\"in_app\":false},{\"filename\":\"/app/node_modules/bullmq/src/utils.ts\",\"module\":\"bullmq.src:utils.ts\",\"function\":\"trace\",\"lineno\":404,\"colno\":14,\"in_app\":false},{\"filename\":\"/app/node_modules/bullmq/src/classes/worker.ts\",\"module\":\"bullmq.src.classes:worker.ts\",\"function\":\"<anonymous>\",\"lineno\":884,\"colno\":26,\"in_app\":false},{\"filename\":\"/src/workers/exception-polling.worker.ts\",\"module\":\"exception-polling.worker.ts\",\"function\":\"MonitoredWorker.processExceptionPollingJob\",\"lineno\":327,\"colno\":10,\"in_app\":true}]}",
+  "traceId": "fdec5013f9fa0ab08c32c5105ee7c656",
+  "spanId": "8281cd1315235691",
+  "parentSpanId": "bd4996ae5288ad22",
+  "timestamp": "2026-03-02 02:33:39.607000000",
+  "_id": "69a4f76fdf8282bd7ea21ffa"
+}
+```
+
+
+---
+
+## TOOLS AVAILABLE
+
+### queryOtel Tool
+
+**Usage:** 
+```bash
+bash /Users/perla/code/experiments/cursor-qo/7/query-otel.sh --sql "YOUR_SQL_HERE"
+```
+
+**Example:**
+```bash
+bash /Users/perla/code/experiments/cursor-qo/7/query-otel.sh --sql "SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'"
+```
+
+**Tables:**
+- `otel_logs`: Timestamp, TraceId, SpanId, ServiceName, SeverityText, SeverityNumber, Body, LogAttributes, ResourceAttributes
+- `otel_traces`: Timestamp, TraceId, SpanId, ParentSpanId, ServiceName, SpanName, SpanKind, Duration, StatusCode, StatusMessage, SpanAttributes, ResourceAttributes
+
+**Example Queries:**
+```sql
+SELECT * FROM otel_logs WHERE SeverityText = 'ERROR'
+SELECT TraceId, SpanName FROM otel_traces WHERE StatusCode = 'ERROR'
+SELECT SpanName, Duration/1000000000.0 as seconds FROM otel_traces ORDER BY Duration DESC LIMIT 20
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+- **Model used: opus-4.6** ← REQUIRED - DO NOT CHANGE
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/experiments/cursor-qo/7/opus-4.6/output.md`
+
+---

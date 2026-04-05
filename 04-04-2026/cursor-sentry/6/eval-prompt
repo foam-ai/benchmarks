@@ -1,0 +1,103 @@
+# RCA Investigation - Eval 6
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `79390570cf625fefccf0bf4422afc66d54280a78`  
+**Error Timestamp:** `2025-12-28 04:25:52`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+
+**Error:**
+```
+ResponseError: document_parsing_exception
+    Caused by:
+        illegal_argument_exception: For input string: "log().info('Creating worktree', { repoOwner, repoName, gitSha, worktreePath });"
+    Root causes:
+        document_parsing_exception: [1:114] failed to parse field [arg_0] of type [long] in document with id 'SRB7WJsBZqWjny1Va7b8'.
+```
+
+**Timestamp:** `2025-12-26 02:27:22.234000000`
+
+**Stacktrace:**
+```
+ResponseError: document_parsing_exception
+    at SniffingTransport._request (/app/node_modules/@elastic/transport/src/Transport.ts:606:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SniffingTransport.request (/app/node_modules/@elastic/transport/src/Transport.ts:737:14)
+    at async Client.IndexApi (/app/node_modules/@elastic/src/api/api/index.ts:83:10)
+    at async ElasticsearchTransport.processQueue (/elasticsearch/transport.ts:108:17)
+    at async Timeout._onTimeout (/elasticsearch/transport.ts:57:17)
+```
+
+---
+
+## TOOLS AVAILABLE
+
+### Sentry MCP
+
+You have access to Sentry MCP tools to investigate this error in detail:
+
+**Usage:**
+```bash
+get_sentry_resource(resourceType='issue', organizationSlug='foam-ai-0j', resourceId='ISSUE_ID')
+search_issue_events(organizationSlug='foam-ai-0j', issueId='ISSUE_ID', naturalLanguageQuery='...')
+```
+
+**Available Operations:**
+- Fetch full issue details, events, and context
+- Search events by message, timestamp, or trace ID
+- Get breadcrumbs and tags
+- Review all occurrences and error patterns
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+---
+
+## Metrics
+
+**Performance:**
+- Total latency: [X seconds]
+- Token usage: [input tokens] + [output tokens] = [total tokens]
+
+**Tool Usage:**
+- Top 3 most-used tools: [tool1], [tool2], [tool3]
+- Top 3 most USEFUL tools: [tool1 (input: what_you_investigated)] [tool2 (input: ...)] [tool3 (input: ...)]
+```
+
+---
+
+## OUTPUT LOCATION
+
+Write results to:
+`/Users/perla/code/benchmarks/04-04-2026/cursor-sentry/6/output.md`
+
+---

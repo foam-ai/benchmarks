@@ -1,0 +1,54 @@
+# RCA Investigation - Eval 11
+
+**Investigate and fix this error in ONE SINGLE PASS.**
+
+You cannot ask questions, request clarifications, or iterate. This is your one shot.
+
+---
+
+## TASK
+
+Your assignment: Investigate and analyze this production error, understand the root cause, and propose a specific fix.
+
+---
+
+## ERROR INFORMATION
+
+**Commit SHA:** `2844c49ade475f23e3fcd8ba19b86873fc7ac423`  
+**Error Timestamp:** `2026-01-16 23:26:59`
+
+**Repository:** foam-ai/all-the-things
+
+**Service:** Mewtwo (service-id: `mewtwo`)
+
+**Full Telemetry Data:**
+```json
+{
+  "exceptionType": "Error",
+  "exceptionMessage": "Job data must include \"command\" field",
+  "exceptionStacktrace": "{\"frames\":[{\"filename\":\"/app/node_modules/bullmq/src/classes/worker.ts\",\"module\":\"bullmq.src.classes:worker.ts\",\"function\":\"MonitoredWorker.retryIfFailed\",\"lineno\":1251,\"colno\":16,\"in_app\":false},{\"filename\":\"/app/node_modules/bullmq/src/utils.ts\",\"module\":\"bullmq.src:utils.ts\",\"function\":\"trace\",\"lineno\":404,\"colno\":14,\"in_app\":false},{\"filename\":\"/app/node_modules/bullmq/src/classes/worker.ts\",\"module\":\"bullmq.src.classes:worker.ts\",\"function\":\"<anonymous>\",\"lineno\":884,\"colno\":26,\"in_app\":false},{\"filename\":\"node:internal/process/task_queues\",\"module\":\"task_queues\",\"function\":\"process.processTicksAndRejections\",\"lineno\":105,\"colno\":5,\"in_app\":false},{\"filename\":\"/app/mewtwo/src/workers/eval.worker.ts\",\"module\":\"eval.worker.ts\",\"function\":\"MonitoredWorker.MonitoredWorker.concurrency\",\"lineno\":43,\"colno\":23,\"in_app\":true,\"pre_context\":[\"        async (job) => {\",\"            log().info(`[eval-worker] Processing eval job ${job.id}`, job.data);\",\"            await job.log('Starting eval execution');\",\"\",\"            const { command } = job.data;\",\"\",\"            if (!command) {\"],\"context_line\":\"                throw new Error('Job data must include \\\"command\\\" field');\",\"post_context\":[\"            }\",\"\",\"            // Set up environment variables\",\"            const env: NodeJS.ProcessEnv = {\",\"                ...process.env,\",\"                ENVIRONMENT: ENVIRONMENT || 'development',\",\"            };\"]}]}",
+  "traceId": "4551d102cd4a8be3c8d1308115e1da20",
+  "spanId": "c6af430b3bfecf02",
+  "parentSpanId": "bdacff7479edc839",
+  "timestamp": "2026-01-16 23:26:25.927000000",
+  "_id": "696ac9436fde7b0cb934e264"
+}
+```
+
+---
+
+## REQUIRED OUTPUT FORMAT
+
+Return EXACTLY this format:
+
+```markdown
+## TL;DR
+[One-line root cause summary]
+
+## What Broke and Why
+[Detailed explanation of the failure mechanism and causality chain]
+
+## Fix
+[Immediate fix or fixes]
+
+```
