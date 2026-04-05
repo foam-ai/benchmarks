@@ -1,5 +1,8 @@
 # 04-04-2026 Experiments
 
+- Run date: `04-04-2026`
+- Model used: `opus-4.6`
+
 | Experiment        | 100% | 0%  | Accuracy |
 | ----------------- | ---: | --: | -------: |
 | `cursor-only`     |   12 |  10 |      55% |
