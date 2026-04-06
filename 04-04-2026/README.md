@@ -9,36 +9,37 @@
 | `cursor-sentry`   |    9 |  13 |      41% |
 | `cursor-qo`       |   14 |   8 |      64% |
 | `foam`            |   18 |   4 |      82% |
+| `foam-none`       |    8 |  14 |      36% |
 
 Per-eval results from `score.txt`:
 
-| Eval | `cursor-only` | `cursor-sentry` | `cursor-qo` | `foam` |
-| ---: | ------------: | --------------: | ----------: | -----: |
-|    0 |             0 |             100 |           0 |      0 |
-|    1 |           100 |             100 |         100 |    100 |
-|    2 |           100 |               0 |           0 |    100 |
-|    3 |           100 |             100 |         100 |    100 |
-|    4 |             0 |               0 |         100 |    100 |
-|    5 |           100 |             100 |         100 |    100 |
-|    6 |           100 |               0 |         100 |    100 |
-|    7 |           100 |               0 |         100 |    100 |
-|    8 |             0 |               0 |           0 |    100 |
-|    9 |             0 |               0 |           0 |      0 |
-|   10 |             0 |             100 |           0 |    100 |
-|   11 |             0 |             100 |           0 |    100 |
-|   12 |           100 |             100 |         100 |      0 |
-|   13 |             0 |               0 |           0 |      0 |
-|   14 |           100 |             100 |         100 |    100 |
-|   15 |           100 |             100 |         100 |    100 |
-|   16 |           100 |               0 |           0 |    100 |
-|   17 |             - |               - |           - |      - |
-|   18 |             0 |               0 |         100 |    100 |
-|   19 |             0 |               0 |         100 |    100 |
-|   20 |           100 |               0 |         100 |    100 |
-|   21 |             0 |               0 |         100 |    100 |
-|   22 |           100 |               0 |         100 |    100 |
+| Eval | `cursor-only` | `cursor-sentry` | `cursor-qo` | `foam` | `foam-none` |
+| ---: | ------------: | --------------: | ----------: | -----: | ----------: |
+|    0 |             0 |             100 |           0 |      0 |           0 |
+|    1 |           100 |             100 |         100 |    100 |           0 |
+|    2 |           100 |               0 |           0 |    100 |         100 |
+|    3 |           100 |             100 |         100 |    100 |           0 |
+|    4 |             0 |               0 |         100 |    100 |         100 |
+|    5 |           100 |             100 |         100 |    100 |           0 |
+|    6 |           100 |               0 |         100 |    100 |           0 |
+|    7 |           100 |               0 |         100 |    100 |           0 |
+|    8 |             0 |               0 |           0 |    100 |         100 |
+|    9 |             0 |               0 |           0 |      0 |           0 |
+|   10 |             0 |             100 |           0 |    100 |           0 |
+|   11 |             0 |             100 |           0 |    100 |           0 |
+|   12 |           100 |             100 |         100 |      0 |           0 |
+|   13 |             0 |               0 |           0 |      0 |           0 |
+|   14 |           100 |             100 |         100 |    100 |         100 |
+|   15 |           100 |             100 |         100 |    100 |         100 |
+|   16 |           100 |               0 |           0 |    100 |           0 |
+|   17 |             - |               - |           - |      - |           - |
+|   18 |             0 |               0 |         100 |    100 |         100 |
+|   19 |             0 |               0 |         100 |    100 |           0 |
+|   20 |           100 |               0 |         100 |    100 |           0 |
+|   21 |             0 |               0 |         100 |    100 |         100 |
+|   22 |           100 |               0 |         100 |    100 |         100 |
 
-This directory contains four experimental conditions: `cursor-only`, `cursor-sentry`, `cursor-qo`, and `foam`.
+This directory contains five experimental conditions: `cursor-only`, `cursor-sentry`, `cursor-qo`, `foam`, and `foam-none`.
 
 At a high level, the procedure was as follows:
 
@@ -58,6 +59,7 @@ The experimental conditions differed in the following way:
 - `cursor-sentry`: same general setup, but the agent was explicitly permitted to use Sentry MCP during investigation.
 - `cursor-qo`: same general setup, but the agent was given access to `query-otel`, a tool built by the Foam team.
 - `foam`: an agent that root-causes bugs without user help or intervention.
+- `foam-none`: an additional Foam condition included in this experiment run.
 
 High-level folder structure:
 

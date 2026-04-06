@@ -1,0 +1,156 @@
+[
+  {
+    "eval_name": "foam-agent-otel-traces-invalid-column",
+    "experiment_id": "1384a3f3-e99a-4593-9c41-36a1c6fa30f1",
+    "row_count": 6,
+    "has_output": true,
+    "score": "100"
+  },
+  {
+    "eval_name": "foam-azure-api-resource-not-found",
+    "experiment_id": "576703bc-2ad5-4eea-badc-99a889a2f259",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-clickhouse-sql-agent-failing-tpm-exhaustion",
+    "experiment_id": "bce22cc0-18ee-4a4c-b5a5-6c1755d161bd",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-deep-research-vertex-fallback-model-not-found-5-whys",
+    "experiment_id": "1e4a59f1-08c3-4315-9975-84b9bfa9c53c",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-drain3-path-error",
+    "experiment_id": "d326e86b-98e9-42fa-8062-a352234f1ee1",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-elastic-parsing-log-error",
+    "experiment_id": "25b5b401-ea77-4eca-901f-86fe5c71eafe",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-empty-solution-uploaded-to-s3",
+    "experiment_id": "5c2be44c-b0d5-4460-be6c-d61216b42a3e",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-eval-clickhouse-oom-concurrent-eval-agents",
+    "experiment_id": "2943946a-45d5-490e-9bf3-a421ce03a70b",
+    "row_count": 6,
+    "has_output": true,
+    "score": "100"
+  },
+  {
+    "eval_name": "foam-eval-empty-solution",
+    "experiment_id": "5bbdc9d3-1b08-46c4-90fe-736b7dc862fa",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-eval-mewtwo-repo-not-found",
+    "experiment_id": "86ef7e91-8f2f-4e66-959f-0b7d43fe3503",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-eval-stale-git-worktree-metadata",
+    "experiment_id": "7f079860-cf25-4b7f-a9a9-1da92c650a04",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-eval-stale-rca-runid-not-in-mongo",
+    "experiment_id": "2807b1fd-f966-49ba-befb-7d366245734c",
+    "row_count": 6,
+    "has_output": true,
+    "score": "100"
+  },
+  {
+    "eval_name": "foam-eval-type-error-text2match",
+    "experiment_id": "627878e6-b471-4a18-9243-be9e8d7f5b16",
+    "row_count": 6,
+    "has_output": true,
+    "score": "100"
+  },
+  {
+    "eval_name": "foam-eval-worker-missing-command-field",
+    "experiment_id": "8103cf96-79cd-46ea-816f-18e62b4c9064",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-eval-worker-timeout",
+    "experiment_id": "609917c5-3b7a-445a-8221-b676ad214973",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-issue-solver-tool-ordering-fallback-bug",
+    "experiment_id": "7070921f-1833-4f0f-8d8e-40fe44250ef9",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-mini-solver-terminal-velocity-failed-after-unavailable-memory",
+    "experiment_id": "d44f0c22-5d4a-4706-b3f3-66a5e001ace3",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-mono-lock-error-handled-error",
+    "experiment_id": "641f034f-5e3d-4024-af67-f50ef26c5a8b",
+    "row_count": 6,
+    "has_output": true,
+    "score": "100"
+  },
+  {
+    "eval_name": "foam-redis-oom-bullmq-job-failure",
+    "experiment_id": "916075e2-b7cd-4287-8378-cf60eefb7e8d",
+    "row_count": 6,
+    "has_output": true,
+    "score": "100"
+  },
+  {
+    "eval_name": "foam-sentry-project-not-found",
+    "experiment_id": "75045b14-bf8d-4277-a8fd-9b0d98492bf7",
+    "row_count": 6,
+    "has_output": true,
+    "score": "0"
+  },
+  {
+    "eval_name": "foam-simpleton-tool-bug-describe-limit",
+    "experiment_id": "ec3b43db-55b1-4832-9a24-bcb8ccfaf95c",
+    "row_count": 6,
+    "has_output": true,
+    "score": "100"
+  },
+  {
+    "eval_name": "foam-user-not-logged-in",
+    "experiment_id": "55743323-7652-4c89-86d0-3cb1c24c258a",
+    "row_count": 6,
+    "has_output": true,
+    "score": "100"
+  }
+]
