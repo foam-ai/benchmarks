@@ -42,7 +42,7 @@ This directory contains four experimental conditions: `cursor-only`, `cursor-sen
 
 At a high level, the procedure was as follows:
 
-1. For each eval index, the experiment was initialized from a specific repository and commit SHA defined in the corresponding master prompt.
+1. For each eval index, the experiment was initialized from a specific repository and commit SHA defined in the corresponding eval prompt.
 2. A dedicated git worktree was created for that eval so that each run was conducted in an isolated copy of the codebase.
 3. Pre-existing eval directories were removed from the worktree to reduce the chance that agents could rely on precomputed artifacts instead of performing investigation.
 4. The prepared worktree was briefly inspected before execution.
