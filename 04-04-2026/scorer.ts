@@ -7,7 +7,7 @@
 // Examples:
 //   npx tsx scorer.ts               — score all experiments
 //   npx tsx scorer.ts cursor-sentry — score only cursor-sentry
-//   npx tsx scorer.ts claude-code   — score only claude-code
+//   npx tsx scorer.ts foam          — score only foam
 //   npx tsx scorer.ts cursor-qo --skip=14 — score cursor-qo except eval 14
 
 import { promises as fs } from 'fs';
