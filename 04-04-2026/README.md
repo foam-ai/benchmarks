@@ -7,12 +7,12 @@
 | ----------------- | ---: | --: | -------: |
 | `cursor-only`     |   12 |  10 |      55% |
 | `cursor-sentry`   |    9 |  13 |      41% |
-| `cursor-qo`       |   14 |   8 |      64% |
+| `cursor (Foam MCP)` |   14 |   8 |      64% |
 | `foam`            |   18 |   4 |      82% |
 
 Per-eval results from `score.txt`:
 
-| Eval | `cursor-only` | `cursor-sentry` | `cursor-qo` | `foam` |
+| Eval | `cursor-only` | `cursor-sentry` | `cursor (Foam MCP)` | `foam` |
 | ---: | ------------: | --------------: | ----------: | -----: |
 |    0 |             0 |             100 |           0 |      0 |
 |    1 |           100 |             100 |         100 |    100 |
@@ -38,7 +38,7 @@ Per-eval results from `score.txt`:
 |   21 |             0 |               0 |         100 |    100 |
 |   22 |           100 |               0 |         100 |    100 |
 
-This directory contains four experimental conditions: `cursor-only`, `cursor-sentry`, `cursor-qo`, and `foam`.
+This directory contains four experimental conditions: `cursor-only`, `cursor-sentry`, `cursor (Foam MCP)`, and `foam`.
 
 At a high level, the procedure was as follows:
 
@@ -56,7 +56,7 @@ The experimental conditions differed in the following way:
 
 - `cursor-only`: baseline Cursor condition using only the eval prompt and the assigned repository worktree.
 - `cursor-sentry`: same general setup, but the agent was explicitly permitted to use Sentry MCP during investigation.
-- `cursor-qo`: same general setup, but the agent was given access to `query-otel`, a tool built by the Foam team.
+- `cursor (Foam MCP)`: same general setup, but the agent was given access to `query-otel`, a tool built by the Foam team.
 - `foam`: an agent that root-causes bugs without user help or intervention.
 
 High-level folder structure:
