@@ -17,40 +17,45 @@ Accuracy (%)              0    10   20   30   40   50   60   70   80   90   100
 04-12-2026
   foam                    ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
 
-09-15-2026 (Claude Code on Fable 5.1; illustrative; Fable 5.1 + Codex consensus)
+09-15-2026 (Claude Code vs. Codex; illustrative; Fable 5.1 + Codex consensus)
+  codex-sentry            ███████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░  45.5%  (10/22)
   claude-code-sentry      █████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░  50.0%  (11/22)
+  codex-only              ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
   claude-code-only        ██████████████████████████████░░░░░░░░░░░░░░░░░░░░  59.1%  (13/22)
+  codex (Foam MCP)        ████████████████████████████████████░░░░░░░░░░░░░░  72.7%  (16/22)
   claude-code (Foam MCP)  █████████████████████████████████████████░░░░░░░░░  81.8%  (18/22)
-  foam                    █████████████████████████████████████████████░░░░░  90.9%  (20/22)
 ```
 
 ## Timeline
 
 | Date | Best Agent | Accuracy | Evals |
 |------|-----------|----------|-------|
-| **09-15-2026** | foam | **90.9%** (20/22) † | 22 |
+| **09-15-2026** | claude-code (Foam MCP), `claude-fable-5-1` | **81.8%** (18/22) † | 22 |
 | 04-12-2026 | foam (`repr-qo-b-rlm`) | 86.4% (19/22) | 22 |
 | 04-04-2026 | foam (production) | 81.8% (18/22) | 22 |
 
-† Illustrative run: Claude Code (Fable 5.1) vs. Foam, scored by Fable 5.1 + Codex consensus; outputs are mocked. See the run README.
+† Illustrative run: Claude Code vs. Codex (no Foam condition), scored by Fable 5.1 + Codex consensus; outputs are mocked. See the run README.
 
 ## Benchmark Runs
 
 ### [09-15-2026](./09-15-2026/)
 
-Claude Code (running on Fable 5.1) in place of the April Cursor conditions, plus the Foam agent,
-scored by two independent judges (Fable 5.1 and Codex) instead of GPT-4o. Same ordering of
-conditions as 04-04, higher accuracy across the board. **Outputs in this directory are mocked to
-illustrate the trend**; see its README for the models breakdown before quoting numbers.
+Claude Code (`claude-fable-5-1`) vs. Codex (`gpt-5-codex`), each with the same three tool setups used
+for Cursor in April, scored by two independent judges (Fable 5.1 and Codex) instead of GPT-4o. Same
+ordering of tool setups as 04-04 in both harnesses, higher accuracy across the board, Claude Code ahead
+of Codex by one or two evals in every setup. **Outputs in this directory are mocked to illustrate the
+trend**; see its README for the models breakdown before quoting numbers.
 
-| Experiment | Agent model | Score (consensus) | Accuracy | Fable judge | Codex judge |
-|------------|-------------|------------------:|---------:|------------:|------------:|
-| **foam** | Foam (`repr-qo-b-rlm`) | **20/22** | **90.9%** | 21/22 | 20/22 |
-| claude-code (Foam MCP) | `claude-fable-5-1` | 18/22 | 81.8% | 19/22 | 18/22 |
-| claude-code-only | `claude-fable-5-1` | 13/22 | 59.1% | 13/22 | 14/22 |
-| claude-code-sentry | `claude-fable-5-1` | 11/22 | 50.0% | 13/22 | 11/22 |
+| Experiment | Harness / model | Score (consensus) | Accuracy | Fable judge | Codex judge |
+|------------|-----------------|------------------:|---------:|------------:|------------:|
+| **claude-code (Foam MCP)** | Claude Code / `claude-fable-5-1` | **18/22** | **81.8%** | 19/22 | 18/22 |
+| codex (Foam MCP) | Codex / `gpt-5-codex` | 16/22 | 72.7% | 17/22 | 16/22 |
+| claude-code-only | Claude Code / `claude-fable-5-1` | 13/22 | 59.1% | 13/22 | 14/22 |
+| codex-only | Codex / `gpt-5-codex` | 12/22 | 54.5% | 12/22 | 13/22 |
+| claude-code-sentry | Claude Code / `claude-fable-5-1` | 11/22 | 50.0% | 13/22 | 11/22 |
+| codex-sentry | Codex / `gpt-5-codex` | 10/22 | 45.5% | 10/22 | 11/22 |
 
-Judge agreement 83/88 (94.3%).
+Judge agreement 125/132 (94.7%).
 
 ### [04-12-2026](./04-12-2026/)
 
