@@ -1,102 +1,96 @@
 #!/usr/bin/env node
-// Score all RCA eval outputs with two independent judges (Fable 5.1 and Codex).
-// Finds every output.md under <experiment>/N/, scores it against the shared
-// answer key in ../04-04-2026/answers/N.md, and writes three files next to it:
-//   score-fable.txt  — Fable 5.1 verdict (100 / 0)
-//   score-codex.txt  — Codex verdict     (100 / 0)
-//   score.txt        — consensus: 100 only when BOTH judges answer Yes
+// Score all RCA eval outputs.
+// Finds every output.md under <experiment>/N/, scores it against answers/N.md,
+// and writes score.txt next to it.
 //
 // Usage: npx tsx scorer.ts [experiment] [--skip=1,2,3]
-// Env:   ANTHROPIC_API_KEY, OPENAI_API_KEY
+// Examples:
+//   npx tsx scorer.ts               — score all experiments
+//   npx tsx scorer.ts claude-code-sentry — score only claude-code-sentry
+//   npx tsx scorer.ts codex-only    — score only codex-only
+//   npx tsx scorer.ts codex-foam-mcp --skip=14 — score codex-foam-mcp except eval 14
 
 import { promises as fs } from 'fs';
 import path from 'path';
-import Anthropic from '@anthropic-ai/sdk';
-import OpenAI from 'openai';
+import { LLMClassifierFromTemplate } from 'autoevals';
 import { glob } from 'glob';
 
 const ROOT = path.dirname(new URL(import.meta.url).pathname);
-const ANSWERS_DIR = path.join(ROOT, '..', '04-04-2026', 'answers');
+const ANSWERS_DIR = path.join(ROOT, '..', '04-04-2026', 'answers'); // shared answer key
 
-const FABLE_MODEL = 'claude-fable-5-1';
-const CODEX_MODEL = 'gpt-5-codex';
+const rcaClassifier = LLMClassifierFromTemplate({
+	model: 'gpt-4o',
+	name: 'rca-match',
+	promptTemplate: `You are an expert software engineer evaluating whether an output RCA correctly identifies the same root cause as an answer-key RCA.
+  
+  ## Answer-Key RCA
+  {{expected}}
+  
+  ## Output RCA (to evaluate)
+  {{output}}
+  
+  ---
+  
+  Think step by step through the following questions:
+  
+  **1. Are these describing the same incident?**
+  Do both RCAs reference the same observable failure such as same error or service?
+  If they describe different incidents, answer "No" immediately.
+  
+  **2. Do they agree on the precise root cause?**
+  The root cause is the specific technical condition that, if corrected, would fix the bug.
+  E.g. two RCAs that mention the same symptom or the same general system area but disagree on the underlying technical cause are not a match.
+  Two RCAs that share the same observations but attribute the failure to different underlying conditions (e.g., operational error vs. code defect) do NOT have the same root cause.
+  This is the most important question. Overlapping fix recommendations do NOT make two RCAs a match if they diagnose different root causes.
 
-const PROMPT = (expected: string, output: string) => `You are an expert software engineer evaluating whether an output RCA correctly identifies the same root cause as an answer-key RCA.
+  **3. Would an engineer reading the output RCA arrive at the same fix as one who read the answer-key RCA?**
+  Based purely on the understanding of the root cause conveyed in each RCA, would two engineers independently reach the same conclusion about what needs to change?
 
-## Answer-Key RCA
-${expected}
+  - If their mental model of the problem would lead them in fundamentally different directions (i.e. fixing one would not resolve the issue described in the other), the root causes are not the same.
 
-## Output RCA (to evaluate)
-${output}
+  - The fix proposed does not need to be identical in wording or implementation. RCAs can still match if they identify the same underlying issue, even if one includes additional contributing factors or describes the cause at a different level of abstraction.
 
----
-
-Think step by step through the following questions:
-
-**1. Are these describing the same incident?**
-Do both RCAs reference the same observable failure such as same error or service?
-If they describe different incidents, answer "No" immediately.
-
-**2. Do they agree on the precise root cause?**
-The root cause is the specific technical condition that, if corrected, would fix the bug.
-Two RCAs that mention the same symptom or the same general system area but disagree on the underlying technical cause are not a match.
-Two RCAs that share the same observations but attribute the failure to different underlying conditions (e.g., operational error vs. code defect) do NOT have the same root cause.
-Overlapping fix recommendations do NOT make two RCAs a match if they diagnose different root causes.
-
-**3. Would an engineer reading the output RCA arrive at the same fix as one who read the answer-key RCA?**
-The fix does not need to be identical in wording. RCAs still match if they identify the same underlying condition, even if one includes extra contributing factors or a different level of abstraction.
-
-Answer "Yes" only if all three are true. Answer "No" if the output identifies the right symptom but the wrong underlying cause.
-
-Reason step by step, then finish with a final line containing exactly one word: Yes or No.`;
-
-function parseVerdict(text: string): 100 | 0 {
-	const last = text.trim().split('\n').filter(Boolean).pop() ?? '';
-	return /\byes\b/i.test(last) ? 100 : 0;
-}
-
-async function judgeFable(expected: string, output: string): Promise<100 | 0> {
-	const client = new Anthropic();
-	const res = await client.messages.create({
-		model: FABLE_MODEL,
-		max_tokens: 2048,
-		messages: [{ role: 'user', content: PROMPT(expected, output) }],
-	});
-	const text = res.content.map((b) => ('text' in b ? b.text : '')).join('');
-	return parseVerdict(text);
-}
-
-async function judgeCodex(expected: string, output: string): Promise<100 | 0> {
-	const client = new OpenAI();
-	const res = await client.responses.create({ model: CODEX_MODEL, input: PROMPT(expected, output) });
-	return parseVerdict(res.output_text);
-}
+  - Focus on whether both RCAs point to the same underlying condition that, if corrected, would resolve the issue — not whether they suggest the exact same fix steps.
+  ---
+  
+  Answer "Yes" only if all three are true:
+  - Same incident or error
+  - Same precise root cause (not just same symptom or general service)
+  - An engineer reading the output would arrive at the same fix as one reading the answer-key
+  
+  Answer "No" if the output identifies the right symptom but the wrong underlying cause, or if the understanding conveyed would lead an engineer to a different fix than the answer-key.`,
+	choiceScores: { No: 0, Yes: 1 },
+	useCoT: true,
+});
 
 async function main() {
-	const experiment = process.argv[2]?.startsWith('--') ? undefined : process.argv[2];
+	const experiment = process.argv[2];
 	const skipArg = process.argv.find((arg) => arg.startsWith('--skip='));
 	const skipped = new Set((skipArg?.slice('--skip='.length).split(',') ?? []).filter(Boolean));
 	const pattern = experiment ? `${experiment}/*/output.md` : '*/*/output.md';
-	const outputFiles = (await glob(pattern, { cwd: ROOT, absolute: true })).filter((p) => {
-		const experimentName = path.basename(path.dirname(path.dirname(p)));
-		return experimentName !== 'node_modules' && !skipped.has(path.basename(path.dirname(p)));
+	const outputFiles = (await glob(pattern, { cwd: ROOT, absolute: true })).filter((outputPath) => {
+		const experimentName = path.basename(path.dirname(path.dirname(outputPath)));
+		const evalIndex = path.basename(path.dirname(outputPath));
+		return experimentName !== 'answers' && experimentName !== 'node_modules' && !skipped.has(evalIndex);
 	});
-	console.log(`Found ${outputFiles.length} output(s) to score\n`);
+	console.log(
+		`Found ${outputFiles.length} output(s) to score${experiment ? ` (experiment: ${experiment})` : ''}${skipped.size ? `, skipping: ${Array.from(skipped).join(', ')}` : ''}\n`,
+	);
 
-	let agree = 0;
-	let total = 0;
 	for (const outputPath of outputFiles.sort()) {
 		const evalIndex = path.basename(path.dirname(outputPath));
-		const exp = path.basename(path.dirname(path.dirname(outputPath)));
-		const label = `${exp}/${evalIndex}`;
+		const experiment = path.basename(path.dirname(path.dirname(outputPath)));
+		const label = `${experiment}/${evalIndex}`;
 
+		const answerPath = path.join(ANSWERS_DIR, `${evalIndex}.md`);
 		let answerKey: string;
 		try {
-			answerKey = await fs.readFile(path.join(ANSWERS_DIR, `${evalIndex}.md`), 'utf-8');
+			answerKey = await fs.readFile(answerPath, 'utf-8');
 		} catch {
 			console.log(`${label}: skipped (no answer key)`);
 			continue;
 		}
+
 		const output = await fs.readFile(outputPath, 'utf-8');
 		if (!output.trim()) {
 			console.log(`${label}: skipped (empty output)`);
@@ -104,22 +98,14 @@ async function main() {
 		}
 
 		try {
-			const [fable, codex] = await Promise.all([judgeFable(answerKey, output), judgeCodex(answerKey, output)]);
-			const final = fable === 100 && codex === 100 ? 100 : 0;
-			const dir = path.dirname(outputPath);
-			await Promise.all([
-				fs.writeFile(path.join(dir, 'score-fable.txt'), String(fable)),
-				fs.writeFile(path.join(dir, 'score-codex.txt'), String(codex)),
-				fs.writeFile(path.join(dir, 'score.txt'), String(final)),
-			]);
-			total++;
-			if (fable === codex) agree++;
-			console.log(`${label}: ${final}  (fable=${fable}, codex=${codex}${fable !== codex ? ' — SPLIT' : ''})`);
+			const result = await rcaClassifier({ expected: answerKey, output });
+			const score = result.score === 1 ? 100 : 0;
+			await fs.writeFile(path.join(path.dirname(outputPath), 'score.txt'), String(score));
+			console.log(`${label}: ${score}`);
 		} catch (err) {
 			console.log(`${label}: error — ${err instanceof Error ? err.message : err}`);
 		}
 	}
-	if (total) console.log(`\nJudge agreement: ${agree}/${total} (${((agree / total) * 100).toFixed(1)}%)`);
 }
 
 main();

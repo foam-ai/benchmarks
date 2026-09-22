@@ -1,6 +1,6 @@
 ## TL;DR
 
-The job was enqueued with empty data; the validation is working as intended, though the schema change that made `command` required may also have affected in-flight jobs.
+A recent schema change to `EvalJobData` made `command` required, breaking older jobs already sitting in the queue.
 
 ## What Broke and Why
 
@@ -8,13 +8,13 @@ The job was enqueued with empty data; the validation is working as intended, tho
 
 ### Causal Chain
 
-**1.** The payload in Redis is `{}`.
+**1.** The validation error appeared right after a deploy.
 
-**2.** `command` became required in a recent change.
+**2.** Jobs enqueued before the deploy have the old shape.
 
 ## Fix
 
-- Correct the producer and consider a migration for in-flight jobs.
+- Make `command` optional with a default, or drain the queue before deploying.
 
 ---
 

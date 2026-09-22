@@ -1,6 +1,6 @@
 ## TL;DR
 
-The Azure resource does not expose the Responses API at the URL the AI SDK builds with deployment-based URLs; the API version may also be a factor.
+The Azure `apiVersion` (`2024-12-01-preview`) is too old for the Responses API and the deployment name has a typo, so the endpoint returns 404.
 
 ## What Broke and Why
 
@@ -10,13 +10,13 @@ Sentry MCP (`get_sentry_resource` / `search_issue_events`) was used to pull the 
 
 ### Causal Chain
 
-**1.** Deployment-based `/responses` path 404s while chat completions work.
+**1.** The URL includes a preview API version.
 
-**2.** Preview API version in use.
+**2.** 404 is what Azure returns for unknown deployments.
 
 ## Fix
 
-- Switch to v1-style URLs for the responses model and bump the API version.
+- Bump the API version and verify the deployment name.
 
 ---
 

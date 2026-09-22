@@ -1,6 +1,6 @@
 ## TL;DR
 
-The `--sha` pre-flight cannot run inside ECS workers because the deployed artifact has no git metadata; the check fails and the job hangs until the timeout.
+The `git` binary is missing from the ECS worker image, so pre-flight checks fail; the 2-hour timeout is a secondary symptom of the missing failure propagation.
 
 ## What Broke and Why
 
@@ -10,13 +10,13 @@ The `--sha` pre-flight cannot run inside ECS workers because the deployed artifa
 
 ### Causal Chain
 
-**1.** Containers are deployed as built artifacts.
+**1.** `git` commands fail inside the container.
 
-**2.** The rejection is not surfaced to the job.
+**2.** The job stays active until the timeout.
 
 ## Fix
 
-- Disable the git pre-flight for remote workers; make pre-flight failures fail the job.
+- Install git in the image and fail fast on pre-flight errors.
 
 ---
 

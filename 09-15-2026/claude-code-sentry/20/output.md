@@ -1,6 +1,6 @@
 ## TL;DR
 
-Git's worktree registry is out of sync with the filesystem after a failed removal, so `git worktree add` refuses; a concurrent create for the same SHA may have contributed.
+Two jobs for the same SHA call `createWorktree()` concurrently; the second sees a half-created worktree and git rejects the duplicate registration.
 
 ## What Broke and Why
 
@@ -10,13 +10,13 @@ Sentry MCP (`get_sentry_resource` / `search_issue_events`) was used to pull the 
 
 ### Causal Chain
 
-**1.** Registry entry survives directory deletion.
+**1.** Two runs reference the same commit within seconds.
 
-**2.** `directoryExists()` is the only guard.
+**2.** No lock around worktree creation.
 
 ## Fix
 
-- Prune stale registrations before adding; add a per-SHA lock.
+- Serialise worktree creation per SHA.
 
 ---
 

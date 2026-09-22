@@ -1,6 +1,6 @@
 ## TL;DR
 
-`queryOtel` now returns structured JSON where the AI SDK expects text; the tool output change and the SDK's string assumption together produce the `.match()` crash.
+A minor version bump of the `ai` package changed how tool results are parsed; the new version assumes text results and crashes on structured output.
 
 ## What Broke and Why
 
@@ -8,13 +8,13 @@
 
 ### Causal Chain
 
-**1.** Tool output became an object after a recent change.
+**1.** The stack trace is inside `ai/dist/index.mjs`.
 
-**2.** SDK calls `.match()` on tool results.
+**2.** The lockfile shows a recent `ai` upgrade.
 
 ## Fix
 
-- Stringify the tool result before returning it.
+- Pin `ai` to the previous version.
 
 ---
 
