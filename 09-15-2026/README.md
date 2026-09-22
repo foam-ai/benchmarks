@@ -71,6 +71,33 @@ Judge agreement: **125/132 (94.7%)**. The 7 splits are marked † below and all 
   eval 0 (the `solverResult`/`result` property mismatch) is only solved by `claude-code-sentry` and
   `claude-code (Foam MCP)`.
 
+## Comparison with earlier runs
+
+Agent and judge models on every row. April Cursor runs used `opus-4.6` as the agent model (see the
+04-04 README); the Foam agent's underlying model is not recorded in this repo, only its configuration.
+
+### Matched tool setups
+
+| Tool setup | Cursor 04-04<br>agent `opus-4.6` · judge `gpt-4o` | Codex 09-15<br>agent `gpt-5-codex` · judges Fable 5.1 + Codex | Claude Code 09-15<br>agent `claude-fable-5-1` · judges Fable 5.1 + Codex |
+| ---------- | -----------------------------------------------: | ------------------------------------------------------------: | ----------------------------------------------------------------------: |
+| Sentry MCP |                                     9/22 (40.9%) |                                                 11/22 (50.0%) |                                                           12/22 (54.5%) |
+| Bare       |                                    12/22 (54.5%) |                                                 13/22 (59.1%) |                                                           14/22 (63.6%) |
+| Foam MCP   |                                    14/22 (63.6%) |                                                 17/22 (77.3%) |                                                           19/22 (86.4%) |
+
+### Against the Foam agent
+
+| Run                          | Harness / agent model                              | Judge                                       |         Score |
+| ---------------------------- | -------------------------------------------------- | ------------------------------------------- | ------------: |
+| foam 04-04                   | Foam agent, production config (model not recorded) | `gpt-4o`                                    | 18/22 (81.8%) |
+| foam 04-12                   | Foam agent, `repr-qo-b-rlm` (model not recorded)   | `gpt-4o`                                    | 19/22 (86.4%) |
+| claude-code (Foam MCP) 09-15 | Claude Code / `claude-fable-5-1`                   | `claude-fable-5-1` + `gpt-5-codex` consensus | 19/22 (86.4%) |
+| codex (Foam MCP) 09-15       | Codex / `gpt-5-codex`                              | `claude-fable-5-1` + `gpt-5-codex` consensus | 17/22 (77.3%) |
+
+Two things change between April and September at once: the agent (harness and model) and the judge.
+Consensus is at least as strict as any single judge, so the lift is not explained by a lenient judge
+alone, but agent and judge effects cannot be separated without re-scoring the April outputs with the
+new judges.
+
 ## Per-eval results
 
 Consensus `score.txt`; † = judges split (see `score-fable.txt` / `score-codex.txt`).
