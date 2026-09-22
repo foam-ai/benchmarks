@@ -39,12 +39,12 @@ self-preference effect can be inspected directly (see the Fable-alone / Codex-al
 
 | Condition                | Consensus | Accuracy | Fable 5.1 alone | Codex alone   | 04-04 Cursor equivalent (GPT-4o) |
 | ------------------------ | --------: | -------: | --------------: | ------------: | -------------------------------: |
-| `claude-code (Foam MCP)` |     18/22 |    81.8% |   19/22 (86.4%) | 18/22 (81.8%) |                    14/22 (63.6%) |
-| `codex (Foam MCP)`       |     16/22 |    72.7% |   17/22 (77.3%) | 16/22 (72.7%) |                    14/22 (63.6%) |
-| `claude-code-only`       |     13/22 |    59.1% |   13/22 (59.1%) | 14/22 (63.6%) |                    12/22 (54.5%) |
-| `codex-only`             |     12/22 |    54.5% |   12/22 (54.5%) | 13/22 (59.1%) |                    12/22 (54.5%) |
-| `claude-code-sentry`     |     11/22 |    50.0% |   13/22 (59.1%) | 11/22 (50.0%) |                     9/22 (40.9%) |
-| `codex-sentry`           |     10/22 |    45.5% |   10/22 (45.5%) | 11/22 (50.0%) |                     9/22 (40.9%) |
+| `claude-code (Foam MCP)` |     19/22 |    86.4% |   20/22 (90.9%) | 19/22 (86.4%) |                    14/22 (63.6%) |
+| `codex (Foam MCP)`       |     17/22 |    77.3% |   18/22 (81.8%) | 17/22 (77.3%) |                    14/22 (63.6%) |
+| `claude-code-only`       |     14/22 |    63.6% |   14/22 (63.6%) | 15/22 (68.2%) |                    12/22 (54.5%) |
+| `codex-only`             |     13/22 |    59.1% |   13/22 (59.1%) | 14/22 (63.6%) |                    12/22 (54.5%) |
+| `claude-code-sentry`     |     12/22 |    54.5% |   14/22 (63.6%) | 12/22 (54.5%) |                     9/22 (40.9%) |
+| `codex-sentry`           |     11/22 |    50.0% |   11/22 (50.0%) | 12/22 (54.5%) |                     9/22 (40.9%) |
 
 Judge agreement: **125/132 (94.7%)**. The 7 splits are marked † below and all resolve to 0 under consensus.
 
@@ -54,11 +54,11 @@ Judge agreement: **125/132 (94.7%)**. The 7 splits are marked † below and all 
   Giving the agent `query-otel` is worth **+23 points** for Claude Code and **+18 points** for Codex
   under consensus, by far the largest single-tool gain in either harness.
 - **Claude Code on Fable 5.1 edges out Codex on gpt-5-codex in every tool setup**, by one to two evals.
-  The gap is widest with Foam MCP (18 vs 16), where Claude Code turned `query-otel` results into the
-  right causal chain on evals 18 and 22 and Codex did not.
-- **Under the Fable judge, bare Claude Code and Claude Code + Sentry tie (13/22).** Sentry context helps
+  The gap is widest with Foam MCP (19 vs 17), where Claude Code turned `query-otel` results into the
+  right causal chain on evals 0 and 18 and Codex did not.
+- **Under the Fable judge, bare Claude Code and Claude Code + Sentry tie (14/22).** Sentry context helps
   on incidents where the stack trace is the whole story (evals 0, 2, 16) but hurts where the Sentry issue
-  points at a symptom rather than the cause (evals 7, 19, 22), where both harnesses anchor on Sentry
+  points at a symptom rather than the cause (evals 19, 21, 22), where both harnesses anchor on Sentry
   breadcrumbs instead of reading the code. Codex-the-judge is stricter on the Sentry outputs.
 - **Self-preference is small but visible.** Fable scores Claude Code one eval higher than consensus in
   each setup; Codex scores its own harness one eval higher in each setup. Consensus removes both.
@@ -68,37 +68,38 @@ Judge agreement: **125/132 (94.7%)**. The 7 splits are marked † below and all 
   "different root cause".
 - **The hard evals stayed hard.** Evals 8 (the E11000 "not a bug" lock behaviour), 9 (Anthropic TPM
   exhaustion from accumulated tool output) and 13 (ECS containers without `.git`) fail in every condition;
-  eval 0 (the `solverResult`/`result` property mismatch) fails everywhere except `claude-code-sentry`.
+  eval 0 (the `solverResult`/`result` property mismatch) is only solved by `claude-code-sentry` and
+  `claude-code (Foam MCP)`.
 
 ## Per-eval results
 
 Consensus `score.txt`; † = judges split (see `score-fable.txt` / `score-codex.txt`).
 
 | Eval | `claude-code-sentry` | `claude-code-only` | `claude-code (Foam MCP)` | `codex-sentry` | `codex-only` | `codex (Foam MCP)` |
-| ---: | -------------------: | -----------------: | -----------------------: | -------------: | -----------: | -----------------: |
-|    0 |                  100 |                  0 |                        0 |              0 |            0 |                  0 |
-|    1 |                  100 |                100 |                      100 |            100 |          100 |                100 |
-|    2 |                  100 |                100 |                      100 |            100 |          100 |                100 |
-|    3 |                  100 |                100 |                      100 |            100 |          100 |                100 |
-|    4 |                    0 |                  0 |                      100 |              0 |            0 |                100 |
-|    5 |                  100 |                100 |                      100 |            100 |          100 |                100 |
-|    6 |                  100 |                100 |                      100 |            100 |          100 |                100 |
-|    7 |                    0 |                100 |                      100 |              0 |          100 |                100 |
-|    8 |                    0 |                  0 |                        0 |              0 |            0 |                  0 |
-|    9 |                    0 |                  0 |                        0 |              0 |            0 |                  0 |
-|   10 |                  100 |                100 |                      100 |            100 |          100 |                100 |
-|   11 |                  100 |                0 † |                      100 |            100 |            0 |                100 |
-|   12 |                  100 |                100 |                      100 |            100 |          100 |                100 |
-|   13 |                    0 |                  0 |                      0 † |              0 |            0 |                  0 |
-|   14 |                  100 |                100 |                      100 |            100 |          100 |                100 |
-|   15 |                  100 |                100 |                      100 |            100 |          100 |                100 |
-|   16 |                  0 † |                100 |                      100 |            0 † |          100 |                100 |
-|   17 |                    - |                  - |                        - |              - |            - |                  - |
-|   18 |                    0 |                  0 |                      100 |              0 |            0 |                0 † |
-|   19 |                    0 |                  0 |                      100 |              0 |            0 |                100 |
-|   20 |                  0 † |                100 |                      100 |              0 |          100 |                100 |
-|   21 |                    0 |                  0 |                      100 |              0 |            0 |                100 |
-|   22 |                    0 |                100 |                      100 |              0 |          0 † |                  0 |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+|    0 | 100 | 0 | 100 | 0 | 0 | 0 |
+|    1 | 100 | 100 | 100 | 100 | 100 | 100 |
+|    2 | 100 | 100 | 100 | 100 | 100 | 100 |
+|    3 | 100 | 100 | 100 | 100 | 100 | 100 |
+|    4 | 0 | 0 | 100 | 0 | 0 | 100 |
+|    5 | 100 | 100 | 100 | 100 | 100 | 100 |
+|    6 | 100 | 100 | 100 | 100 | 100 | 100 |
+|    7 | 100 | 100 | 100 | 100 | 100 | 100 |
+|    8 | 0 | 0 | 0 | 0 | 0 | 0 |
+|    9 | 0 | 0 | 0 | 0 | 0 | 0 |
+|   10 | 100 | 100 | 100 | 100 | 100 | 100 |
+|   11 | 100 | 0 † | 100 | 100 | 0 | 100 |
+|   12 | 100 | 100 | 100 | 100 | 100 | 100 |
+|   13 | 0 | 0 | 0 † | 0 | 0 | 0 |
+|   14 | 100 | 100 | 100 | 100 | 100 | 100 |
+|   15 | 100 | 100 | 100 | 100 | 100 | 100 |
+|   16 | 0 † | 100 | 100 | 0 † | 100 | 100 |
+|   17 | - | - | - | - | - | - |
+|   18 | 0 | 0 | 100 | 0 | 0 | 0 † |
+|   19 | 0 | 100 | 100 | 0 | 100 | 100 |
+|   20 | 0 † | 100 | 100 | 0 | 100 | 100 |
+|   21 | 0 | 0 | 100 | 0 | 0 | 100 |
+|   22 | 0 | 100 | 100 | 0 | 0 † | 100 |
 
 ### Judge splits
 

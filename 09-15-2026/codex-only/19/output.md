@@ -1,6 +1,6 @@
 ## TL;DR
 
-The GitHub App token used by `GitWorktreeService` lacks access to the target repository, and GitHub reports missing permissions as a 404.
+`issue-solver.ts:84` hardcodes `body.repoName || 'mewtwo'`, so runs created without a repo name are stored with `repoName = 'mewtwo'`; that repository no longer exists (absorbed into `foam-ai/all-the-things`), so `createWorktree` fails on `git clone --bare`.
 
 ## What Broke and Why
 
@@ -8,13 +8,13 @@ The GitHub App token used by `GitWorktreeService` lacks access to the target rep
 
 ### Causal Chain
 
-**1.** GitHub returns 404 for both missing and unauthorised repositories.
+**1.** Affected run documents all have `metadata.repoName = 'mewtwo'`.
 
-**2.** Token scopes were recently rotated.
+**2.** The default predates the repository consolidation.
 
 ## Fix
 
-- Grant the app installation access to the repository.
+- Remove the default and make `repoName` required in the request schema; backfill affected runs.
 
 ---
 

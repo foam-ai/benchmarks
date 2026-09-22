@@ -1,6 +1,6 @@
 ## TL;DR
 
-The `porygon` issue page throws on an empty `solution` string returned by the backend; the page component is missing a null/empty guard for runs whose S3 object is empty.
+The `runSideEffects` call in `mewtwo` passes `solverResult` but the function destructures `result`, so `result` is always `undefined`; an empty string is uploaded to S3, the run is marked `completed`, and `porygon` throws when it fetches `{ solution: '' }`.
 
 ## What Broke and Why
 
@@ -10,16 +10,16 @@ The `porygon` issue page throws on an empty `solution` string returned by the ba
 
 ### Causal Chain
 
-**1.** `page.tsx` reads `data.solution` and throws if it is falsy.
+**1.** `mewtwo/src/services/issue-solver/index.ts` calls `runSideEffects({ run, customer, solverResult, ... })` using shorthand property syntax.
 
-**2.** The S3 object for the run exists but is zero bytes, which the backend passes through verbatim.
+**2.** `side-effects/index.ts` destructures `{ run, customer, result }` — there is no `result` key in the argument, so it is `undefined` and coerced to `''` on upload.
 
-**3.** Older runs from before the solver refactor also have empty objects, so the page crashes for them too.
+**3.** The S3 upload has no empty-string guard and the run status is set to `completed`, so the failure is only visible when the frontend renders the issue and hits the hard throw on an empty solution.
 
 ## Fix
 
-- Render an 'awaiting solution' state instead of throwing on an empty string.
-- Backfill empty S3 objects for affected runs.
+- Rename the destructured parameter to `solverResult` (or pass `result: solverResult`) so the types line up and TypeScript catches this class of bug.
+- Add a non-empty assertion before the S3 upload and before marking the run `completed`.
 
 ---
 

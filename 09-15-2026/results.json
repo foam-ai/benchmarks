@@ -51,9 +51,9 @@
         "codex": 100
       },
       "7": {
-        "final": 0,
-        "fable": 0,
-        "codex": 0
+        "final": 100,
+        "fable": 100,
+        "codex": 100
       },
       "8": {
         "final": 0,
@@ -218,9 +218,9 @@
         "codex": 0
       },
       "19": {
-        "final": 0,
-        "fable": 0,
-        "codex": 0
+        "final": 100,
+        "fable": 100,
+        "codex": 100
       },
       "20": {
         "final": 100,
@@ -240,9 +240,9 @@
     },
     "claude-code (Foam MCP)": {
       "0": {
-        "final": 0,
-        "fable": 0,
-        "codex": 0
+        "final": 100,
+        "fable": 100,
+        "codex": 100
       },
       "1": {
         "final": 100,
@@ -387,9 +387,9 @@
         "codex": 100
       },
       "7": {
-        "final": 0,
-        "fable": 0,
-        "codex": 0
+        "final": 100,
+        "fable": 100,
+        "codex": 100
       },
       "8": {
         "final": 0,
@@ -554,9 +554,9 @@
         "codex": 0
       },
       "19": {
-        "final": 0,
-        "fable": 0,
-        "codex": 0
+        "final": 100,
+        "fable": 100,
+        "codex": 100
       },
       "20": {
         "final": 100,
@@ -681,9 +681,9 @@
         "codex": 100
       },
       "22": {
-        "final": 0,
-        "fable": 0,
-        "codex": 0
+        "final": 100,
+        "fable": 100,
+        "codex": 100
       }
     }
   }

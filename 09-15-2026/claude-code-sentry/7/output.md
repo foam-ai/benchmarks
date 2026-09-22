@@ -1,6 +1,6 @@
 ## TL;DR
 
-The Docker image for `mewtwo` no longer copies the `vendor/drain3` Python package, so Pyodide cannot load `foam_wrapper` at runtime.
+`getProjectRoot()` in `drain3-pyodide.service.ts` switched to `import.meta.url` with only two `..` segments, resolving to `/app/mewtwo/dist/vendor/drain3` instead of `/app/mewtwo/vendor/drain3`, so Pyodide cannot find `foam_wrapper` on any service or retry.
 
 ## What Broke and Why
 
@@ -10,13 +10,13 @@ Sentry MCP (`get_sentry_resource` / `search_issue_events`) was used to pull the 
 
 ### Causal Chain
 
-**1.** The error is a missing module, which points at the image build.
+**1.** The compiled file lives one directory deeper (`dist/services/`) than the source path the traversal was written for.
 
-**2.** The Dockerfile was recently changed to a multi-stage build.
+**2.** Every exception polling job fails identically on every retry — consistent with a static path bug, not a transient issue.
 
 ## Fix
 
-- Add a `COPY vendor/ ./vendor/` step to the runtime stage.
+- Add one more `..` level (or resolve from the package root via `process.cwd()`/`require.resolve`), as done in PR #333.
 
 ---
 

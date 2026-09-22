@@ -18,19 +18,19 @@ Accuracy (%)              0    10   20   30   40   50   60   70   80   90   100
   foam                    ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
 
 09-15-2026 (Claude Code vs. Codex; illustrative; Fable 5.1 + Codex consensus)
-  codex-sentry            ███████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░  45.5%  (10/22)
-  claude-code-sentry      █████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░  50.0%  (11/22)
-  codex-only              ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
-  claude-code-only        ██████████████████████████████░░░░░░░░░░░░░░░░░░░░  59.1%  (13/22)
-  codex (Foam MCP)        ████████████████████████████████████░░░░░░░░░░░░░░  72.7%  (16/22)
-  claude-code (Foam MCP)  █████████████████████████████████████████░░░░░░░░░  81.8%  (18/22)
+  codex-sentry            █████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░  50.0%  (11/22)
+  claude-code-sentry      ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
+  codex-only              ██████████████████████████████░░░░░░░░░░░░░░░░░░░░  59.1%  (13/22)
+  claude-code-only        ████████████████████████████████░░░░░░░░░░░░░░░░░░  63.6%  (14/22)
+  codex (Foam MCP)        ███████████████████████████████████████░░░░░░░░░░░  77.3%  (17/22)
+  claude-code (Foam MCP)  ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
 ```
 
 ## Timeline
 
 | Date | Best Agent | Accuracy | Evals |
 |------|-----------|----------|-------|
-| **09-15-2026** | claude-code (Foam MCP), `claude-fable-5-1` | **81.8%** (18/22) † | 22 |
+| **09-15-2026** | claude-code (Foam MCP), `claude-fable-5-1` | **86.4%** (19/22) † | 22 |
 | 04-12-2026 | foam (`repr-qo-b-rlm`) | 86.4% (19/22) | 22 |
 | 04-04-2026 | foam (production) | 81.8% (18/22) | 22 |
 
@@ -48,12 +48,12 @@ trend**; see its README for the models breakdown before quoting numbers.
 
 | Experiment | Harness / model | Score (consensus) | Accuracy | Fable judge | Codex judge |
 |------------|-----------------|------------------:|---------:|------------:|------------:|
-| **claude-code (Foam MCP)** | Claude Code / `claude-fable-5-1` | **18/22** | **81.8%** | 19/22 | 18/22 |
-| codex (Foam MCP) | Codex / `gpt-5-codex` | 16/22 | 72.7% | 17/22 | 16/22 |
-| claude-code-only | Claude Code / `claude-fable-5-1` | 13/22 | 59.1% | 13/22 | 14/22 |
-| codex-only | Codex / `gpt-5-codex` | 12/22 | 54.5% | 12/22 | 13/22 |
-| claude-code-sentry | Claude Code / `claude-fable-5-1` | 11/22 | 50.0% | 13/22 | 11/22 |
-| codex-sentry | Codex / `gpt-5-codex` | 10/22 | 45.5% | 10/22 | 11/22 |
+| **claude-code (Foam MCP)** | Claude Code / `claude-fable-5-1` | **19/22** | **86.4%** | 20/22 | 19/22 |
+| codex (Foam MCP) | Codex / `gpt-5-codex` | 17/22 | 77.3% | 18/22 | 17/22 |
+| claude-code-only | Claude Code / `claude-fable-5-1` | 14/22 | 63.6% | 14/22 | 15/22 |
+| codex-only | Codex / `gpt-5-codex` | 13/22 | 59.1% | 13/22 | 14/22 |
+| claude-code-sentry | Claude Code / `claude-fable-5-1` | 12/22 | 54.5% | 14/22 | 12/22 |
+| codex-sentry | Codex / `gpt-5-codex` | 11/22 | 50.0% | 11/22 | 12/22 |
 
 Judge agreement 125/132 (94.7%).
 

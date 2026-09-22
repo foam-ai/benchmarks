@@ -1,6 +1,6 @@
 ## TL;DR
 
-A minor version bump of the `ai` package changed how tool results are parsed; the new version assumes text results and crashes on structured output.
+PR #401 changed `query-otel.tool.ts` to return `result.json()` under a `z.unknown()` output schema, so tool results became raw row objects; the Vercel AI SDK expects string tool output and calls `.match()` on it, which crashes.
 
 ## What Broke and Why
 
@@ -10,13 +10,13 @@ A minor version bump of the `ai` package changed how tool results are parsed; th
 
 ### Causal Chain
 
-**1.** The stack trace is inside `ai/dist/index.mjs`.
+**1.** The schema was widened from `z.string()` to `z.unknown()` in the same PR.
 
-**2.** The lockfile shows a recent `ai` upgrade.
+**2.** Failures begin exactly at the PR's deploy time (2026-03-18 01:37 UTC).
 
 ## Fix
 
-- Pin `ai` to the previous version.
+- Return `JSON.stringify(rows)` (schema back to `z.string()`) or wrap the object in `{ type: 'json', value }` per the SDK's tool-result contract.
 
 ---
 
