@@ -5,27 +5,45 @@ RCA (Root Cause Analysis) evaluation benchmarks for the Foam agent. Each eval re
 ## Results Overview
 
 ```
-Accuracy (%)         0    10   20   30   40   50   60   70   80   90   100
-                     ├────┼────┼────┼────┼────┼────┼────┼────┼────┼────┤
+Accuracy (%)              0    10   20   30   40   50   60   70   80   90   100
+                          ├────┼────┼────┼────┼────┼────┼────┼────┼────┼────┤
 
 04-04-2026
-  cursor-sentry      ████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  40.9%  (9/22)
-  cursor-only        ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
-  cursor (Foam MCP)  ████████████████████████████████░░░░░░░░░░░░░░░░░░  63.6%  (14/22)
-  foam               █████████████████████████████████████████░░░░░░░░░  81.8%  (18/22)
+  cursor-sentry           ████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  40.9%  (9/22)
+  cursor-only             ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
+  cursor (Foam MCP)       ████████████████████████████████░░░░░░░░░░░░░░░░░░  63.6%  (14/22)
+  foam                    █████████████████████████████████████████░░░░░░░░░  81.8%  (18/22)
 
 04-12-2026
-  foam               ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
+  foam                    ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
+
+09-20-2026 (Claude Code on Fable 5.1)
+  claude-code-sentry      ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
+  claude-code-only        ████████████████████████████████░░░░░░░░░░░░░░░░░░  63.6%  (14/22)
+  claude-code (Foam MCP)  ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
 ```
 
 ## Timeline
 
 | Date | Best Agent | Accuracy | Evals |
 |------|-----------|----------|-------|
-| **04-12-2026** | foam (`repr-qo-b-rlm`) | **86.4%** (19/22) | 22 |
+| **09-20-2026** | claude-code (Foam MCP), `claude-fable-5-1` | **86.4%** (19/22) | 22 |
+| 04-12-2026 | foam (`repr-qo-b-rlm`) | 86.4% (19/22) | 22 |
 | 04-04-2026 | foam (production) | 81.8% (18/22) | 22 |
 
 ## Benchmark Runs
+
+### [09-20-2026](./09-20-2026/)
+
+Claude Code on `claude-fable-5-1` in place of Cursor on `opus-4.6`, with the same three tool setups
+used in April and the same GPT-4o classifier. Same ordering of tool setups as 04-04, higher accuracy in
+every setup.
+
+| Experiment | Harness / model | Score | Accuracy | 04-04 Cursor |
+|------------|-----------------|------:|---------:|-------------:|
+| **claude-code (Foam MCP)** | Claude Code / `claude-fable-5-1` | **19/22** | **86.4%** | 14/22 |
+| claude-code-only | Claude Code / `claude-fable-5-1` | 14/22 | 63.6% | 12/22 |
+| claude-code-sentry | Claude Code / `claude-fable-5-1` | 12/22 | 54.5% | 9/22 |
 
 ### [04-12-2026](./04-12-2026/)
 
@@ -54,7 +72,7 @@ Answer keys and scoring details are in each date's directory.
 
 ## Scoring
 
-Outputs are scored by a GPT-4o classifier (`scorer.ts`) that checks:
+Outputs are scored by a GPT-4o classifier (`scorer.ts` in each date directory) that checks:
 1. Same incident
 2. Same precise root cause
 3. Would lead an engineer to the same fix
