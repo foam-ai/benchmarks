@@ -7,8 +7,8 @@
 // Examples:
 //   npx tsx scorer.ts               — score all experiments
 //   npx tsx scorer.ts claude-code-sentry — score only claude-code-sentry
-//   npx tsx scorer.ts codex-only    — score only codex-only
-//   npx tsx scorer.ts codex-foam-mcp --skip=14 — score codex-foam-mcp except eval 14
+//   npx tsx scorer.ts claude-code-only   — score only claude-code-only
+//   npx tsx scorer.ts claude-code-foam-mcp --skip=14 — score claude-code-foam-mcp except eval 14
 
 import { promises as fs } from 'fs';
 import path from 'path';
