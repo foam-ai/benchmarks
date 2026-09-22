@@ -5,23 +5,23 @@ RCA (Root Cause Analysis) evaluation benchmarks for the Foam agent. Each eval re
 ## Results Overview
 
 ```
-Accuracy (%)         0    10   20   30   40   50   60   70   80   90   100
-                     ├────┼────┼────┼────┼────┼────┼────┼────┼────┼────┤
+Accuracy (%)              0    10   20   30   40   50   60   70   80   90   100
+                          ├────┼────┼────┼────┼────┼────┼────┼────┼────┼────┤
 
 04-04-2026
-  cursor-sentry      ████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  40.9%  (9/22)
-  cursor-only        ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
-  cursor (Foam MCP)  ████████████████████████████████░░░░░░░░░░░░░░░░░░  63.6%  (14/22)
-  foam               █████████████████████████████████████████░░░░░░░░░  81.8%  (18/22)
+  cursor-sentry           ████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  40.9%  (9/22)
+  cursor-only             ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
+  cursor (Foam MCP)       ████████████████████████████████░░░░░░░░░░░░░░░░░░  63.6%  (14/22)
+  foam                    █████████████████████████████████████████░░░░░░░░░  81.8%  (18/22)
 
 04-12-2026
-  foam               ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
+  foam                    ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
 
-09-15-2026 (illustrative; Fable 5.1 + Codex consensus)
-  cursor-sentry      █████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░  50.0%  (11/22)
-  cursor-only        ████████████████████████████████░░░░░░░░░░░░░░░░░░  63.6%  (14/22)
-  cursor (Foam MCP)  ███████████████████████████████████████░░░░░░░░░░░  77.3%  (17/22)
-  foam               █████████████████████████████████████████████░░░░░  90.9%  (20/22)
+09-15-2026 (Claude Code on Fable 5.1; illustrative; Fable 5.1 + Codex consensus)
+  claude-code-sentry      █████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░  50.0%  (11/22)
+  claude-code-only        ██████████████████████████████░░░░░░░░░░░░░░░░░░░░  59.1%  (13/22)
+  claude-code (Foam MCP)  █████████████████████████████████████████░░░░░░░░░  81.8%  (18/22)
+  foam                    █████████████████████████████████████████████░░░░░  90.9%  (20/22)
 ```
 
 ## Timeline
@@ -32,24 +32,25 @@ Accuracy (%)         0    10   20   30   40   50   60   70   80   90   100
 | 04-12-2026 | foam (`repr-qo-b-rlm`) | 86.4% (19/22) | 22 |
 | 04-04-2026 | foam (production) | 81.8% (18/22) | 22 |
 
-† Illustrative run scored by Fable 5.1 + Codex consensus; outputs are mocked. See the run README.
+† Illustrative run: Claude Code (Fable 5.1) vs. Foam, scored by Fable 5.1 + Codex consensus; outputs are mocked. See the run README.
 
 ## Benchmark Runs
 
 ### [09-15-2026](./09-15-2026/)
 
-Re-run of the four-condition comparison from April, scored by two independent judges (Fable 5.1 and
-Codex) instead of GPT-4o. Same ordering of conditions as 04-04, higher accuracy across the board.
-**Outputs in this directory are mocked to illustrate the trend**; see its README before quoting numbers.
+Claude Code (running on Fable 5.1) in place of the April Cursor conditions, plus the Foam agent,
+scored by two independent judges (Fable 5.1 and Codex) instead of GPT-4o. Same ordering of
+conditions as 04-04, higher accuracy across the board. **Outputs in this directory are mocked to
+illustrate the trend**; see its README for the models breakdown before quoting numbers.
 
-| Experiment | Score (consensus) | Accuracy | Δ vs 04-04 |
-|------------|------------------:|---------:|-----------:|
-| **foam** | **20/22** | **90.9%** | +9.1 |
-| cursor (Foam MCP) | 17/22 | 77.3% | +13.7 |
-| cursor-only | 14/22 | 63.6% | +9.1 |
-| cursor-sentry | 11/22 | 50.0% | +9.1 |
+| Experiment | Agent model | Score (consensus) | Accuracy | Fable judge | Codex judge |
+|------------|-------------|------------------:|---------:|------------:|------------:|
+| **foam** | Foam (`repr-qo-b-rlm`) | **20/22** | **90.9%** | 21/22 | 20/22 |
+| claude-code (Foam MCP) | `claude-fable-5-1` | 18/22 | 81.8% | 19/22 | 18/22 |
+| claude-code-only | `claude-fable-5-1` | 13/22 | 59.1% | 13/22 | 14/22 |
+| claude-code-sentry | `claude-fable-5-1` | 11/22 | 50.0% | 13/22 | 11/22 |
 
-Judge agreement 82/88 (93.2%).
+Judge agreement 83/88 (94.3%).
 
 ### [04-12-2026](./04-12-2026/)
 
