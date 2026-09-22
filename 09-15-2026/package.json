@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.60.0",
+    "glob": "^13.0.6",
+    "openai": "^5.20.0"
+  }
+}
