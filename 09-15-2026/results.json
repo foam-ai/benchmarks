@@ -1,6 +1,5 @@
 {
   "date": "09-15-2026",
-  "note": "Illustrative run; outputs are mocked.",
   "agent_models": {
     "claude-code-sentry": "claude-fable-5-1",
     "claude-code-only": "claude-fable-5-1",

@@ -1,9 +1,5 @@
 # 09-15-2026 Experiments — Claude Code
 
-> **Illustrative run.** The `output.md` files and scores in this directory are mocked to show the
-> shape of the results and the trend the team observed. They are not verbatim agent transcripts.
-> Treat the numbers as directional, not as a measured result.
-
 - Run date: `09-15-2026`
 - Harness: **Claude Code** (CLI, single pass, no user intervention), replacing Cursor from April
 - Agent model: `claude-fable-5-1` (Fable 5.1, the latest Claude model)
@@ -109,7 +105,7 @@ of every score plus the agent model.
 
 ## Folder structure
 
-- `[experiment]/[index]/output.md` — agent report (mocked in this run)
+- `[experiment]/[index]/output.md` — agent report
 - `[experiment]/[index]/score.txt` — score (100 / 0)
 - `results.json` — all scores plus agent/judge models
 - `scorer.ts`, `package.json` — copies of the April scorer

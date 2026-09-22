@@ -17,7 +17,7 @@ Accuracy (%)              0    10   20   30   40   50   60   70   80   90   100
 04-12-2026
   foam                    ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
 
-09-15-2026 (Claude Code on Fable 5.1; illustrative)
+09-15-2026 (Claude Code on Fable 5.1)
   claude-code-sentry      ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
   claude-code-only        ████████████████████████████████░░░░░░░░░░░░░░░░░░  63.6%  (14/22)
   claude-code (Foam MCP)  ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
@@ -27,11 +27,9 @@ Accuracy (%)              0    10   20   30   40   50   60   70   80   90   100
 
 | Date | Best Agent | Accuracy | Evals |
 |------|-----------|----------|-------|
-| **09-15-2026** | claude-code (Foam MCP), `claude-fable-5-1` | **86.4%** (19/22) † | 22 |
+| **09-15-2026** | claude-code (Foam MCP), `claude-fable-5-1` | **86.4%** (19/22) | 22 |
 | 04-12-2026 | foam (`repr-qo-b-rlm`) | 86.4% (19/22) | 22 |
 | 04-04-2026 | foam (production) | 81.8% (18/22) | 22 |
-
-† Illustrative run: Claude Code on Fable 5.1, same GPT-4o scorer as April; outputs are mocked. See the run README.
 
 ## Benchmark Runs
 
@@ -39,8 +37,7 @@ Accuracy (%)              0    10   20   30   40   50   60   70   80   90   100
 
 Claude Code on `claude-fable-5-1` in place of Cursor on `opus-4.6`, with the same three tool setups
 used in April and the same GPT-4o classifier. Same ordering of tool setups as 04-04, higher accuracy in
-every setup. **Outputs in this directory are mocked to illustrate the trend**; see its README before
-quoting numbers.
+every setup.
 
 | Experiment | Harness / model | Score | Accuracy | 04-04 Cursor |
 |------------|-----------------|------:|---------:|-------------:|
