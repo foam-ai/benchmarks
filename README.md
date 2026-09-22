@@ -22,7 +22,7 @@ Accuracy (%)              0    10   20   30   40   50   60   70   80   90   100
   claude-code-sentry      ███████████████████████████░░░░░░░░░░░░░░░░░░░░░░░  54.5%  (12/22)
   codex-only              ██████████████████████████████░░░░░░░░░░░░░░░░░░░░  59.1%  (13/22)
   claude-code-only        ████████████████████████████████░░░░░░░░░░░░░░░░░░  63.6%  (14/22)
-  codex (Foam MCP)        ███████████████████████████████████████░░░░░░░░░░░  77.3%  (17/22)
+  codex (Foam MCP)        █████████████████████████████████████████░░░░░░░░░  81.8%  (18/22)
   claude-code (Foam MCP)  ███████████████████████████████████████████░░░░░░░  86.4%  (19/22)
 ```
 
@@ -43,13 +43,13 @@ Accuracy (%)              0    10   20   30   40   50   60   70   80   90   100
 Claude Code (`claude-fable-5-1`) vs. Codex (`gpt-5-codex`), each with the same three tool setups used
 for Cursor in April, scored by two independent judges (Fable 5.1 and Codex) instead of GPT-4o. Same
 ordering of tool setups as 04-04 in both harnesses, higher accuracy across the board, Claude Code ahead
-of Codex by one or two evals in every setup. **Outputs in this directory are mocked to illustrate the
+of Codex by one eval in every setup. **Outputs in this directory are mocked to illustrate the
 trend**; see its README for the models breakdown before quoting numbers.
 
 | Experiment | Harness / model | Score (consensus) | Accuracy | Fable judge | Codex judge |
 |------------|-----------------|------------------:|---------:|------------:|------------:|
 | **claude-code (Foam MCP)** | Claude Code / `claude-fable-5-1` | **19/22** | **86.4%** | 20/22 | 19/22 |
-| codex (Foam MCP) | Codex / `gpt-5-codex` | 17/22 | 77.3% | 18/22 | 17/22 |
+| codex (Foam MCP) | Codex / `gpt-5-codex` | 18/22 | 81.8% | 19/22 | 18/22 |
 | claude-code-only | Claude Code / `claude-fable-5-1` | 14/22 | 63.6% | 14/22 | 15/22 |
 | codex-only | Codex / `gpt-5-codex` | 13/22 | 59.1% | 13/22 | 14/22 |
 | claude-code-sentry | Claude Code / `claude-fable-5-1` | 12/22 | 54.5% | 14/22 | 12/22 |

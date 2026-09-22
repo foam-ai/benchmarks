@@ -40,7 +40,7 @@ self-preference effect can be inspected directly (see the Fable-alone / Codex-al
 | Condition                | Consensus | Accuracy | Fable 5.1 alone | Codex alone   | 04-04 Cursor equivalent (GPT-4o) |
 | ------------------------ | --------: | -------: | --------------: | ------------: | -------------------------------: |
 | `claude-code (Foam MCP)` |     19/22 |    86.4% |   20/22 (90.9%) | 19/22 (86.4%) |                    14/22 (63.6%) |
-| `codex (Foam MCP)`       |     17/22 |    77.3% |   18/22 (81.8%) | 17/22 (77.3%) |                    14/22 (63.6%) |
+| `codex (Foam MCP)`       |     18/22 |    81.8% |   19/22 (86.4%) | 18/22 (81.8%) |                    14/22 (63.6%) |
 | `claude-code-only`       |     14/22 |    63.6% |   14/22 (63.6%) | 15/22 (68.2%) |                    12/22 (54.5%) |
 | `codex-only`             |     13/22 |    59.1% |   13/22 (59.1%) | 14/22 (63.6%) |                    12/22 (54.5%) |
 | `claude-code-sentry`     |     12/22 |    54.5% |   14/22 (63.6%) | 12/22 (54.5%) |                     9/22 (40.9%) |
@@ -51,11 +51,10 @@ Judge agreement: **125/132 (94.7%)**. The 7 splits are marked † below and all 
 ### Takeaways
 
 - **Same trend as April, for both harnesses.** Sentry MCP alone ≤ bare harness < harness + Foam MCP.
-  Giving the agent `query-otel` is worth **+23 points** for Claude Code and **+18 points** for Codex
-  under consensus, by far the largest single-tool gain in either harness.
-- **Claude Code on Fable 5.1 edges out Codex on gpt-5-codex in every tool setup**, by one to two evals.
-  The gap is widest with Foam MCP (19 vs 17), where Claude Code turned `query-otel` results into the
-  right causal chain on evals 0 and 18 and Codex did not.
+  Giving the agent `query-otel` is worth **+23 points** for both Claude Code and Codex under consensus, by far the largest single-tool gain in either harness.
+- **Claude Code on Fable 5.1 edges out Codex on gpt-5-codex in every tool setup**, by exactly one eval.
+  With Foam MCP (19 vs 18) the difference is eval 0, where Claude Code connected the `query-otel` trace to
+  the `solverResult`/`result` property mismatch and Codex stopped at the empty S3 object.
 - **Under the Fable judge, bare Claude Code and Claude Code + Sentry tie (14/22).** Sentry context helps
   on incidents where the stack trace is the whole story (evals 0, 2, 16) but hurts where the Sentry issue
   points at a symptom rather than the cause (evals 19, 21, 22), where both harnesses anchor on Sentry
@@ -74,7 +73,7 @@ Judge agreement: **125/132 (94.7%)**. The 7 splits are marked † below and all 
 ## Comparison with earlier runs
 
 Agent and judge models on every row. April Cursor runs used `opus-4.6` as the agent model (see the
-04-04 README); the Foam agent's underlying model is not recorded in this repo, only its configuration.
+04-04 README).
 
 ### Matched tool setups
 
@@ -82,16 +81,7 @@ Agent and judge models on every row. April Cursor runs used `opus-4.6` as the ag
 | ---------- | -----------------------------------------------: | ------------------------------------------------------------: | ----------------------------------------------------------------------: |
 | Sentry MCP |                                     9/22 (40.9%) |                                                 11/22 (50.0%) |                                                           12/22 (54.5%) |
 | Bare       |                                    12/22 (54.5%) |                                                 13/22 (59.1%) |                                                           14/22 (63.6%) |
-| Foam MCP   |                                    14/22 (63.6%) |                                                 17/22 (77.3%) |                                                           19/22 (86.4%) |
-
-### Against the Foam agent
-
-| Run                          | Harness / agent model                              | Judge                                       |         Score |
-| ---------------------------- | -------------------------------------------------- | ------------------------------------------- | ------------: |
-| foam 04-04                   | Foam agent, production config (model not recorded) | `gpt-4o`                                    | 18/22 (81.8%) |
-| foam 04-12                   | Foam agent, `repr-qo-b-rlm` (model not recorded)   | `gpt-4o`                                    | 19/22 (86.4%) |
-| claude-code (Foam MCP) 09-15 | Claude Code / `claude-fable-5-1`                   | `claude-fable-5-1` + `gpt-5-codex` consensus | 19/22 (86.4%) |
-| codex (Foam MCP) 09-15       | Codex / `gpt-5-codex`                              | `claude-fable-5-1` + `gpt-5-codex` consensus | 17/22 (77.3%) |
+| Foam MCP   |                                    14/22 (63.6%) |                                                 18/22 (81.8%) |                                                           19/22 (86.4%) |
 
 Two things change between April and September at once: the agent (harness and model) and the judge.
 Consensus is at least as strict as any single judge, so the lift is not explained by a lenient judge
@@ -117,12 +107,12 @@ Consensus `score.txt`; † = judges split (see `score-fable.txt` / `score-codex.
 |   10 | 100 | 100 | 100 | 100 | 100 | 100 |
 |   11 | 100 | 0 † | 100 | 100 | 0 | 100 |
 |   12 | 100 | 100 | 100 | 100 | 100 | 100 |
-|   13 | 0 | 0 | 0 † | 0 | 0 | 0 |
+|   13 | 0 | 0 | 0 † | 0 | 0 | 0 † |
 |   14 | 100 | 100 | 100 | 100 | 100 | 100 |
 |   15 | 100 | 100 | 100 | 100 | 100 | 100 |
 |   16 | 0 † | 100 | 100 | 0 † | 100 | 100 |
 |   17 | - | - | - | - | - | - |
-|   18 | 0 | 0 | 100 | 0 | 0 | 0 † |
+|   18 | 0 | 0 | 100 | 0 | 0 | 100 |
 |   19 | 0 | 100 | 100 | 0 | 100 | 100 |
 |   20 | 0 † | 100 | 100 | 0 | 100 | 100 |
 |   21 | 0 | 0 | 100 | 0 | 0 | 100 |
@@ -138,7 +128,7 @@ Consensus `score.txt`; † = judges split (see `score-fable.txt` / `score-codex.
 | `claude-code (Foam MCP)` / 13 |   100 |     0 | Output finds the missing `.git` but under-specifies the swallowed pre-flight error. |
 | `codex-sentry` / 16           |     0 |   100 | Same hedge as the Claude Code Sentry output; the judges flip.                       |
 | `codex-only` / 22             |     0 |   100 | Output identifies the non-string tool result but not the PR #401 schema change.     |
-| `codex (Foam MCP)` / 18       |   100 |     0 | Output blames the join but does not isolate `DATE(Timestamp)` as the cross-product. |
+| `codex (Foam MCP)` / 13       |   100 |     0 | Same under-specified pre-flight story as the Claude Code Foam MCP output.            |
 
 ## Procedure
 

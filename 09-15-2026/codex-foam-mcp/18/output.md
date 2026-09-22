@@ -1,6 +1,6 @@
 ## TL;DR
 
-A broad agent query — a join between `otel_logs` and `otel_traces` without a selective key — exhausted ClickHouse memory; `queryOtel` imposes no memory limit, and parallel agents made it worse.
+An agent generated a `FULL OUTER JOIN` between `otel_logs` and `otel_traces` on `DATE(Timestamp)`, producing a per-day cross-product that exhausted memory. `queryOtel` has no per-query memory budget and its validation is syntax-only, so the query ran.
 
 ## What Broke and Why
 
@@ -10,13 +10,13 @@ A broad agent query — a join between `otel_logs` and `otel_traces` without a s
 
 ### Causal Chain
 
-**1.** The join key is coarse.
+**1.** Joining on a low-cardinality date key multiplies rows per day.
 
-**2.** No memory budget on the tool.
+**2.** Twenty parallel agents amplified the blast radius, but this specific join is what OOMed.
 
 ## Fix
 
-- Add a per-query memory limit and tighten query validation.
+- Set `max_memory_usage`/`max_execution_time` per query in `queryOtel` and reject joins without a selective key.
 
 ---
 
